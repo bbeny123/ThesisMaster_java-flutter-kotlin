@@ -1,0 +1,10 @@
+baza danych: -> zapis/odczyt po 10k rekordów + odczyt losowy 500
+rest -> get/post po 100
+math -> po 1k
+collections -> dodanie 10k, odczyt 10k, odczyt losowy 1k, dodanie po indexie 1k, usuwanie loswowe po indexie 1k, usuwanie losowe po obiekcie 1k, filtrowanie po obiekcie, sortowanie po obiekcie
+serializacja/deserializacja obiektu 1k
+image 1MB -> base64
+odczyt i zapis pliku 100MB
+mapowanie obiektu 10k
+
+rekurencja fibonacci
