@@ -4,14 +4,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import static java.lang.System.nanoTime;
 import static java.lang.System.nanoTime;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
