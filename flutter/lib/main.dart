@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'DeSer.dart';
+import 'CollectionsBenchmark.dart';
+import 'DeserBenchmark.dart';
 
 const String NO_DATA = 'NO DATA';
 
@@ -53,6 +54,7 @@ class SecondRoute extends StatelessWidget {
 }
 
 class Collections extends StatelessWidget {
+  var benchmark = new CollectionsBenchmark();
   var addOne = new TextEditingController(text: NO_DATA);
   var readAll = new TextEditingController(text: NO_DATA);
   var readRandom = new TextEditingController(text: NO_DATA);
@@ -70,17 +72,17 @@ class Collections extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _row(context, RaisedButton(child: _buttonText('ADD ONE'), onPressed: () => _navigate(context, SecondRoute())), addOne),
+                _row(context, RaisedButton(child: _buttonText('ADD ONE'), onPressed: () async => benchmark.addOne(addOne)), addOne),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('READ ALL'), onPressed: () => _navigate(context, SecondRoute())), readAll),
+                _row(context, RaisedButton(child: _buttonText('READ ALL'), onPressed: () async  => benchmark.readAll(readAll)), readAll),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('READ RANDOM'), onPressed: () => _navigate(context, SecondRoute())), readRandom),
+                _row(context, RaisedButton(child: _buttonText('READ RANDOM'), onPressed: () async  => benchmark.readRandom(readRandom)), readRandom),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('REMOVE ONE'), onPressed: () => _navigate(context, SecondRoute())), removeOne),
+                _row(context, RaisedButton(child: _buttonText('REMOVE ONE'), onPressed: () async  => benchmark.removeOne(removeOne)), removeOne),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('FILTER'), onPressed: () => _navigate(context, SecondRoute())), filter),
+                _row(context, RaisedButton(child: _buttonText('FILTER'), onPressed: () async  => benchmark.filter(filter)), filter),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('SORT'), onPressed: () => _navigate(context, SecondRoute())), sort)
+                _row(context, RaisedButton(child: _buttonText('SORT'), onPressed: () async  => benchmark.sort(sort)), sort)
               ]
           ),
         )
@@ -149,7 +151,7 @@ class File extends StatelessWidget {
 }
 
 class Deser extends StatelessWidget {
-  var deser = new DeSer();
+  var benchmark = new DeserBenchmark();
   var serialization = new TextEditingController(text: NO_DATA);
   var deserialization = new TextEditingController(text: NO_DATA);
 
@@ -163,9 +165,9 @@ class Deser extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _row(context, RaisedButton(child: _buttonText('SERIALIZATION'), onPressed: () => deser.serialize(serialization)), serialization),
+                _row(context, RaisedButton(child: _buttonText('SERIALIZATION'), onPressed: () => benchmark.serialize(serialization)), serialization),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('DESERIALIZATION'), onPressed: () => deser.deserialize(deserialization)), deserialization)
+                _row(context, RaisedButton(child: _buttonText('DESERIALIZATION'), onPressed: () => benchmark.deserialize(deserialization)), deserialization)
               ]
           ),
         )

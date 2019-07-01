@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'helper/User.dart';
 import 'helper/Util.dart';
 
-class DeSer {
+class DeserBenchmark {
 
   User _user = new User(1, 'user', 'user@user', 'user', 30);
 
