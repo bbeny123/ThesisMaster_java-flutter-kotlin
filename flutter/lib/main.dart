@@ -1,13 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import 'DeSer.dart';
-import 'helper/User.dart';
-
-void main() => runApp(MaterialApp(home: MyApp()));
 
 const String NO_DATA = 'NO DATA';
+
+void main() => runApp(MaterialApp(home: MyApp()));
 
 class MyApp extends StatelessWidget {
   @override
@@ -20,84 +17,15 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ButtonTheme(
-                  minWidth: 160,
-                  height: 40,
-                  child: RaisedButton(
-                      child: Text('COLLECTIONS', textAlign: TextAlign.center),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Collections()),
-                        );
-                      })
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-              ),
-              ButtonTheme(
-                  minWidth: 160,
-                  height: 40,
-                  child: RaisedButton(
-                      child: Text('REST', textAlign: TextAlign.center),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => REST()),
-                        );
-                      })
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-              ),
-              ButtonTheme(
-                  minWidth: 160,
-                  height: 40,
-                  child: RaisedButton(
-                      child: Text('DB', textAlign: TextAlign.center),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DB()),
-                        );
-                      })
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-              ),
-              ButtonTheme(
-                  minWidth: 160,
-                  height: 40,
-                  child: RaisedButton(
-                      child: Text('SERIALIZATION\nDESERIALIZATION',
-                          textAlign: TextAlign.center),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Deser()),
-                        );
-                      })
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-              ),
-              ButtonTheme(
-                  minWidth: 160,
-                  height: 40,
-                  child: RaisedButton(
-                      child: Text('FILE', textAlign: TextAlign.center),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => File()),
-                        );
-                      })
-              )
+              _buttonNavigate(context, 'COLLECTIONS', Collections()),
+              Padding(padding: EdgeInsets.all(8.0)),
+              _buttonNavigate(context, 'REST', REST()),
+              Padding(padding: EdgeInsets.all(8.0)),
+              _buttonNavigate(context, 'DB', DB()),
+              Padding(padding: EdgeInsets.all(8.0)),
+              _buttonNavigate(context, 'SERIALIZATION\nDESERIALIZATION', Deser()),
+              Padding(padding: EdgeInsets.all(8.0)),
+              _buttonNavigate(context, 'FILE', File())
             ],
           )
       ),
@@ -125,6 +53,13 @@ class SecondRoute extends StatelessWidget {
 }
 
 class Collections extends StatelessWidget {
+  var addOne = new TextEditingController(text: NO_DATA);
+  var readAll = new TextEditingController(text: NO_DATA);
+  var readRandom = new TextEditingController(text: NO_DATA);
+  var removeOne = new TextEditingController(text: NO_DATA);
+  var filter = new TextEditingController(text: NO_DATA);
+  var sort = new TextEditingController(text: NO_DATA);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,177 +70,17 @@ class Collections extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('ADD ONE', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('READ ALL', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('READ RANDOM', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('REMOVE', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('FILTER', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('SORT', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                )
+                _row(context, RaisedButton(child: _buttonText('ADD ONE'), onPressed: () => _navigate(context, SecondRoute())), addOne),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('READ ALL'), onPressed: () => _navigate(context, SecondRoute())), readAll),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('READ RANDOM'), onPressed: () => _navigate(context, SecondRoute())), readRandom),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('REMOVE ONE'), onPressed: () => _navigate(context, SecondRoute())), removeOne),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('FILTER'), onPressed: () => _navigate(context, SecondRoute())), filter),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('SORT'), onPressed: () => _navigate(context, SecondRoute())), sort)
               ]
           ),
         )
@@ -314,6 +89,12 @@ class Collections extends StatelessWidget {
 }
 
 class DB extends StatelessWidget {
+  var addOne = new TextEditingController(text: NO_DATA);
+  var getOne = new TextEditingController(text: NO_DATA);
+  var getAll = new TextEditingController(text: NO_DATA);
+  var updateOne = new TextEditingController(text: NO_DATA);
+  var deleteOne = new TextEditingController(text: NO_DATA);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -324,148 +105,15 @@ class DB extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('ADD ONE', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('GET ONE', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('GET ALL', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('UPDATE ONE', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('DELETE ONE', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                )
+                _row(context, RaisedButton(child: _buttonText('ADD ONE'), onPressed: () => _navigate(context, SecondRoute())), addOne),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('GET ONE'), onPressed: () => _navigate(context, SecondRoute())), getOne),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('GET ALL'), onPressed: () => _navigate(context, SecondRoute())), getAll),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('UPDATE ONE'), onPressed: () => _navigate(context, SecondRoute())), updateOne),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('DELETE ONE'), onPressed: () => _navigate(context, SecondRoute())), deleteOne)
               ]
           ),
         )
@@ -474,6 +122,10 @@ class DB extends StatelessWidget {
 }
 
 class File extends StatelessWidget {
+  var save = new TextEditingController(text: NO_DATA);
+  var read = new TextEditingController(text: NO_DATA);
+  var delete = new TextEditingController(text: NO_DATA);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -484,90 +136,11 @@ class File extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('SAVE', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('READ', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('DELETE', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                )
+                _row(context, RaisedButton(child: _buttonText('SAVE'), onPressed: () => _navigate(context, SecondRoute())), save),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('READ'), onPressed: () => _navigate(context, SecondRoute())), read),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('DELETE'), onPressed: () => _navigate(context, SecondRoute())), delete)
               ]
           ),
         )
@@ -576,9 +149,10 @@ class File extends StatelessWidget {
 }
 
 class Deser extends StatelessWidget {
+  var deser = new DeSer();
   var serialization = new TextEditingController(text: NO_DATA);
   var deserialization = new TextEditingController(text: NO_DATA);
-  var deser = new DeSer();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -589,57 +163,9 @@ class Deser extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('SERIALIZATION', textAlign: TextAlign.center),
-                            onPressed: () async {
-                              serialization.text = 'TESTING';
-                              String result = await formatResult(deser.serialize(new User(1, 'user', 'user@user', 'user', 30)));
-                              serialization.text = result;
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: TextField(controller: serialization, textAlign: TextAlign.center)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('DESERIALIZATION', textAlign: TextAlign.center),
-                            onPressed: () async {
-                              deserialization.text = 'TESTING';
-                              String result = await formatResult(deser.deserialize(new User(1, 'user', 'user@user', 'user', 30)));
-                              deserialization.text = result;
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: TextField(controller: deserialization, textAlign: TextAlign.center)
-                    )
-                  ],
-                )
+                _row(context, RaisedButton(child: _buttonText('SERIALIZATION'), onPressed: () => deser.serialize(serialization)), serialization),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('DESERIALIZATION'), onPressed: () => deser.deserialize(deserialization)), deserialization)
               ]
           ),
         )
@@ -648,6 +174,9 @@ class Deser extends StatelessWidget {
 }
 
 class REST extends StatelessWidget {
+  var get = new TextEditingController(text: NO_DATA);
+  var post = new TextEditingController(text: NO_DATA);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -658,61 +187,9 @@ class REST extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('GET', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonTheme(
-                        minWidth: 160,
-                        height: 40,
-                        buttonColor: Colors.white30,
-                        child: RaisedButton(
-                            child: Text('POST', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
-                            })
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                    ),
-                    Container(
-                        width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
-                    )
-                  ],
-                )
+                _row(context, RaisedButton(child: _buttonText('GET'), onPressed: () => _navigate(context, SecondRoute())), get),
+                Padding(padding: EdgeInsets.all(8.0)),
+                _row(context, RaisedButton(child: _buttonText('POST'), onPressed: () => _navigate(context, SecondRoute())), post)
               ]
           ),
         )
@@ -720,7 +197,47 @@ class REST extends StatelessWidget {
   }
 }
 
-String formatResult(double result){
-  double mod = pow(10.0, 3);
-  return ((result * mod).round().toDouble() / mod).toString();
+Row _row(BuildContext context, RaisedButton button, TextEditingController textField) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      ButtonTheme(
+          minWidth: 160,
+          height: 40,
+          buttonColor: Colors.white30,
+          child: button
+      ),
+      Padding(
+        padding: EdgeInsets.all(8.0),
+      ),
+      Container(
+          width: 160,
+          child: TextField(controller: textField, textAlign: TextAlign.center)
+      )
+    ],
+  );
+}
+
+ButtonTheme _buttonNavigate(BuildContext context, String buttonText, Widget widget) {
+  return ButtonTheme(
+      minWidth: 160,
+      height: 40,
+      buttonColor: Colors.white30,
+      child: RaisedButton(
+          child: _buttonText(buttonText),
+          onPressed: () => _navigate(context, widget)
+      )
+  );
+}
+
+Text _buttonText(String text) {
+  return Text(text, textAlign: TextAlign.center);
+}
+
+void _navigate(BuildContext context, StatelessWidget widget) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => widget),
+  );
 }
