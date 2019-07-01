@@ -7,7 +7,6 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,11 +16,13 @@ public class MainActivity extends AppCompatActivity {
         Button deserButton = findViewById(R.id.deserButton);
         Button fileButton = findViewById(R.id.fileButton);
         Button dbButton = findViewById(R.id.dbButton);
+        Button collectionButton = findViewById(R.id.collectionButton);
 
+        collectionButton.setOnClickListener(b -> goToActivity(CollectionActivity.class));
         restButton.setOnClickListener(b -> goToActivity(RestActivity.class));
+        dbButton.setOnClickListener(b -> goToActivity(DBActivity.class));
         deserButton.setOnClickListener(b -> goToActivity(SerializationDeserializationActivity.class));
         fileButton.setOnClickListener(b -> goToActivity(FileActivity.class));
-        dbButton.setOnClickListener(b -> goToActivity(DBActivity.class));
     }
 
     private void goToActivity(Class<? extends AppCompatActivity> clz) {

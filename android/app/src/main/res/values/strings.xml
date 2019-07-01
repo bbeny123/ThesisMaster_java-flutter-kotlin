@@ -6,4 +6,5 @@
     </string>
     <string name="title_activity_file">File</string>
     <string name="title_activity_db">DB</string>
+    <string name="title_activity_collection">Collection</string>
 </resources>
