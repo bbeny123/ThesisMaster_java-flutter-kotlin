@@ -1,32 +1,18 @@
 import 'dart:convert';
-
-import 'package:flutter/widgets.dart';
-
 import 'helper/User.dart';
-import 'helper/Util.dart';
 
 class DeserBenchmark {
 
   User _user = new User(1, 'user', 'user@user', 'user', 30);
 
-  void serialize(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(serializeTest(_user));
-  }
-
-  void deserialize(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(deserializeTest(_user));
-  }
-
-  double serializeTest(User user) {
+  double serialize() {
     int timer;
     int result = 0;
     String json;
 
     for(int i = 0; i < 1000; i++) {
       timer = DateTime.now().microsecondsSinceEpoch;
-      json = jsonEncode(user);
+      json = jsonEncode(_user);
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
@@ -34,10 +20,10 @@ class DeserBenchmark {
     return result / 1000;
   }
 
-  double deserializeTest(User user) {
+  double deserialize() {
     int timer;
     int result = 0;
-    String json = jsonEncode(user);
+    String json = jsonEncode(_user);
     User deserialized;
 
     for(int i = 0; i < 1000; i++) {

@@ -1,52 +1,31 @@
 import 'dart:math';
-
 import 'package:flutter/widgets.dart';
-
 import 'helper/TestObject.dart';
-import 'helper/Util.dart';
 
 class CollectionsBenchmark {
 
-  void addOne(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(add10kObjects());
-  }
-
-  void readAll(TextEditingController text) async {
-    text.text = 'TESTING';
+  double readAll() {
     double result = 0;
     for (int i = 0; i < 100; i++) {
       result += read10k();
     }
-    text.text = Util.formatResult(result / 100);
+    return result / 100;
   }
 
-  void readRandom(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(read1kRandom());
-  }
-
-  void removeOne(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(remove1kRandom());
-  }
-
-  void filter(TextEditingController text) async {
-    text.text = 'TESTING';
+  double filter() {
     double result = 0;
     for (int i = 0; i < 100; i++) {
       result += filterTest();
     }
-    text.text = Util.formatResult(result / 100);
+    return result / 100;
   }
 
-  void sort(TextEditingController text) async {
-    text.text = 'TESTING';
+  double sort() {
     double result = 0;
     for (int i = 0; i < 100; i++) {
       result += sortTest();
     }
-    text.text = Util.formatResult(result / 100);
+    return result / 100;
   }
 
   double add10kObjects() {

@@ -14,12 +14,9 @@ import android.widget.TextView;
 
 import org.kamwas.android_test.helper.Utils;
 
-import java.util.List;
 import java.util.Random;
 
 import static java.lang.System.nanoTime;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.IntStream.range;
 
 public class DBActivity extends AppCompatActivity {
 
@@ -91,10 +88,10 @@ public class DBActivity extends AppCompatActivity {
         long timer;
 
         db.recreateTableWithData();
-        List<Integer> toRead = range(0, 1000).map(i -> new Random().nextInt(1000)).boxed().collect(toList());
         for (int i = 0; i < 1000; i++) {
+            int j = new Random().nextInt(1000);
             timer = nanoTime();
-            db.getOne(toRead.get(i));
+            db.getOne(j);
             result += nanoTime() - timer;
         }
 
@@ -122,10 +119,10 @@ public class DBActivity extends AppCompatActivity {
         long timer;
 
         db.recreateTableWithData();
-        List<Integer> toUpdate = range(0, 1000).map(i -> new Random().nextInt(1000)).boxed().collect(toList());
         for (int i = 0; i < 1000; i++) {
+            int j = new Random().nextInt(1000);
             timer = nanoTime();
-            db.updateOne(toUpdate.get(i), i);
+            db.updateOne(j, i);
             result += nanoTime() - timer;
         }
 
@@ -137,11 +134,11 @@ public class DBActivity extends AppCompatActivity {
         long result = 0L;
         long timer;
 
-        List<Integer> toDelete = range(0, 1000).map(i -> new Random().nextInt(1000)).boxed().collect(toList());
         for (int i = 0; i < 10; i++) {
             db.recreateTableWithData();
+            int j = new Random().nextInt(1000);
             timer = nanoTime();
-            db.deleteOne(toDelete.get(i));
+            db.deleteOne(j);
             result += nanoTime() - timer;
         }
 

@@ -1,22 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-
 import 'helper/User.dart';
-import 'helper/Util.dart';
 
 class RESTBenchmark {
-  void get(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(await getTest());
+
+  double get() {
+    double timer;
+    getTest().then((result) {
+      timer = result;
+    });
+    return timer;
   }
 
-  void post(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(await postTest());
+  double post() {
+    double timer;
+    postTest().then((result) {
+      timer = result;
+    });
+    return timer;
   }
 
   Future<double> getTest() async {

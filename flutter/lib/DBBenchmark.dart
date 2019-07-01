@@ -1,10 +1,6 @@
 import 'dart:math';
-
-import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
-import 'helper/Util.dart';
 
 class DBBenchmark {
 
@@ -35,98 +31,77 @@ class DBBenchmark {
     }
   }
 
-  void addOneText(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(await addOneResult());
-  }
-
-  void getOneText(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(await getOneResult());
-  }
-
-  void getAllText(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(await getAllResult());
-  }
-
-  void updateOneText(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(await updateOneResult());
-  }
-
-  void deleteOneText(TextEditingController text) async {
-    text.text = 'TESTING';
-    text.text = Util.formatResult(await deleteOneResult());
-  }
-
-  Future<double> addOneResult() async {
+  double addOneResult() {
     int result = 0;
     int timer;
     recreateTable();
 
     for (int i = 0; i < 10; i++) {
       timer = DateTime.now().microsecondsSinceEpoch;
-      await addOne(i, "login $i", "email $i", "name $i", 30);
+      addOne(i, "login $i", "email $i", "name $i", 30).then((result) {});
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
     return result / 10;
   }
 
-  Future<double> getOneResult() async {
+  double getOneResult() {
     int result = 0;
     int timer;
-    await recreateTableWithData();
+    recreateTableWithData().then((result) {});
 
     for (int i = 0; i < 1000; i++) {
       int j = new Random().nextInt(1000);
       timer = DateTime.now().microsecondsSinceEpoch;
-      await getOne(j);
+      getOne(j).then((result) {
+        result.length;
+      });
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
     return result / 1000;
   }
 
-  Future<double> getAllResult() async {
+  double getAllResult() {
     int result = 0;
     int timer;
-    await recreateTableWithData();
+    recreateTableWithData().then((result) {});
 
     for (int i = 0; i < 1000; i++) {
       timer = DateTime.now().microsecondsSinceEpoch;
-      (await getAll()).length;
+      getAll().then((result) {
+        result.length;
+      });
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
     return result / 1000;
   }
 
-  Future<double> updateOneResult() async {
+  double updateOneResult() {
     int result = 0;
     int timer;
-    await recreateTableWithData();
+    recreateTableWithData().then((result) {});
 
     for (int i = 0; i < 1000; i++) {
       int j = new Random().nextInt(1000);
       timer = DateTime.now().microsecondsSinceEpoch;
-      await updateOne(j, i);
+      updateOne(j, i).then((result) {});
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
     return result / 1000;
   }
 
-  Future<double> deleteOneResult() async {
+  double deleteOneResult() {
     int result = 0;
     int timer;
 
     for (int i = 0; i < 10; i++) {
-      await recreateTableWithData();
+      recreateTableWithData().then((result) {});
       int j = new Random().nextInt(1000);
       timer = DateTime.now().microsecondsSinceEpoch;
-      await deleteOne(j);
+      deleteOne(j).then((result) {});
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
