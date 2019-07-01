@@ -1,6 +1,5 @@
 package org.kamwas.android_test;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,40 +25,78 @@ public class SerializationDeserializationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button serializationStart  = findViewById(R.id.serializationStart);
+        Button serializationButton  = findViewById(R.id.serializationButton);
+        Button deserializationButton  = findViewById(R.id.deserializationButton);
         TextView serializationResult  = findViewById(R.id.serializationResult);
         TextView deserializationResult  = findViewById(R.id.deserializationResult);
 
         serializationStart.setOnClickListener(b -> {
             Utils.start(serializationResult);
             Utils.start(deserializationResult);
-            AsyncTask.execute(() -> benchmark(serializationResult, deserializationResult));
+            benchmark(serializationResult, deserializationResult);
+            serialize(serializationResult);
+            deserialize(deserializationResult);
+        });
+
+        serializationButton.setOnClickListener(b -> {
+            Utils.start(serializationResult);
+            serialize(serializationResult);
+        });
+
+        deserializationButton.setOnClickListener(b -> {
+            Utils.start(deserializationResult);
+            deserialize(deserializationResult);
         });
 
     }
 
     public void benchmark(TextView sTextView, TextView dTextView) {
+        serialize(sTextView);
+        deserialize(dTextView);
+    }
+
+    public void serialize(TextView textView) {
         User user = new User(1L, "user", "user@user", "user", 30);
-        byte[] serialized;
-        long serializationResult = 0L;
-        long deserializationResult = 0L;
-        long timer = 0L;
+        byte[] serialized = null;
+        long result = 0L;
+        long timer;
 
         for (int i = 0; i < 1000; i++) {
             try {
                 timer = nanoTime();
                 serialized = serialize(user);
-                serializationResult = nanoTime() - timer;
-                timer = nanoTime();
-                user = deserialize(serialized);
-                deserializationResult = nanoTime() - timer;
+                result = nanoTime() - timer;
             } catch (Exception ex) {
-                Log.d("SerializationDeserializationActivity", "Error", ex);
+                Log.d("SerializationDeserializationActivity", "Serialization Error", ex);
             }
 
         }
-        Log.i("SerializationDeserializationActivity", "Benchmark result: " + user.toString());
-        Utils.setResult(sTextView, serializationResult, 1000);
-        Utils.setResult(dTextView, deserializationResult, 1000);
+        Log.i("SerializationDeserializationActivity", "Serialization benchmark finished");
+        Utils.setResult(textView, result, 1000);
+    }
+
+    public void deserialize(TextView textView) {
+        byte[] serialized = null;
+        try {
+            serialized = serialize(new User(1L, "user", "user@user", "user", 30));
+        } catch (Exception ex) {
+            Log.d("SerializationDeserializationActivity", "Deserialization Error", ex);
+        }
+        User user = null;
+        long result = 0L;
+        long timer = 0L;
+
+        for (int i = 0; i < 1000; i++) {
+            try {
+                timer = nanoTime();
+                user = deserialize(serialized);
+                result = nanoTime() - timer;
+            } catch (Exception ex) {
+                Log.d("SerializationDeserializationActivity", "Deserialization Error", ex);
+            }
+        }
+        Log.i("SerializationDeserializationActivity", "Serialization result: " + user.toString());
+        Utils.setResult(textView, result, 1000);
     }
 
     public byte[] serialize(User user) throws Exception {

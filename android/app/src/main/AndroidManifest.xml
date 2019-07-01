@@ -22,7 +22,7 @@
                 android:value="org.kamwas.android_test.MainActivity" />
         </activity>
         <activity
-            android:name=".rest.RestActivity"
+            android:name=".RestActivity"
             android:label="@string/title_activity_rest"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

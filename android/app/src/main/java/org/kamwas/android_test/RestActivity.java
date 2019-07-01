@@ -1,4 +1,4 @@
-package org.kamwas.android_test.rest;
+package org.kamwas.android_test;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
