@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'CollectionsBenchmark.dart';
+import 'DBBenchmark.dart';
 import 'DeserBenchmark.dart';
 import 'RESTBenchmark.dart';
 
@@ -117,6 +118,7 @@ class Collections extends StatelessWidget {
 }
 
 class DB extends StatelessWidget {
+  var benchmark = new DBBenchmark();
   var addOne = new TextEditingController(text: NO_DATA);
   var getOne = new TextEditingController(text: NO_DATA);
   var getAll = new TextEditingController(text: NO_DATA);
@@ -135,35 +137,35 @@ class DB extends StatelessWidget {
                 context,
                 RaisedButton(
                     child: _buttonText('ADD ONE'),
-                    onPressed: () => _navigate(context, SecondRoute())),
+                    onPressed: () async => benchmark.addOneText(addOne)),
                 addOne),
             Padding(padding: EdgeInsets.all(8.0)),
             _row(
                 context,
                 RaisedButton(
                     child: _buttonText('GET ONE'),
-                    onPressed: () => _navigate(context, SecondRoute())),
+                    onPressed: () async => benchmark.getOneText(getOne)),
                 getOne),
             Padding(padding: EdgeInsets.all(8.0)),
             _row(
                 context,
                 RaisedButton(
                     child: _buttonText('GET ALL'),
-                    onPressed: () => _navigate(context, SecondRoute())),
+                    onPressed: () async => benchmark.getAllText(getAll)),
                 getAll),
             Padding(padding: EdgeInsets.all(8.0)),
             _row(
                 context,
                 RaisedButton(
                     child: _buttonText('UPDATE ONE'),
-                    onPressed: () => _navigate(context, SecondRoute())),
+                    onPressed: () async => benchmark.updateOneText(updateOne)),
                 updateOne),
             Padding(padding: EdgeInsets.all(8.0)),
             _row(
                 context,
                 RaisedButton(
                     child: _buttonText('DELETE ONE'),
-                    onPressed: () => _navigate(context, SecondRoute())),
+                    onPressed: () async => benchmark.deleteOneText(deleteOne)),
                 deleteOne)
           ]),
         ));
