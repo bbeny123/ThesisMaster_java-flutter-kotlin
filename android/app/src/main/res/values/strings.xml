@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Android Test</string>
-    <string name="title_activity_rest">RestActivity</string>
+    <string name="title_activity_rest">REST</string>
+    <string name="title_activity_serialization_deserialization">
+        Serialization &amp; Deserialization
+    </string>
 </resources>

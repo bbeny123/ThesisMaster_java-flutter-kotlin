@@ -4,7 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".rest.RestActivity">
+    tools:context=".SerializationDeserializationActivity">
+
+    <Button
+        android:id="@+id/serializationStart"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="START"
+        app:layout_constraintBottom_toTopOf="@+id/deserializationButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.197" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -17,32 +33,32 @@
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <Button
-        android:id="@+id/postButton"
-        android:layout_width="130dp"
+        android:id="@+id/serializationButton"
+        android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="228dp"
-        android:text="POST"
+        android:text="Deserialization"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getButton"
+        app:layout_constraintTop_toBottomOf="@+id/deserializationButton"
         app:layout_constraintVertical_bias="0.313" />
 
     <Button
-        android:id="@+id/getButton"
-        android:layout_width="130dp"
+        android:id="@+id/deserializationButton"
+        android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="220dp"
-        android:text="GET"
+        android:text="Serialization"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
-        android:id="@+id/getResult"
+        android:id="@+id/serializationResult"
         android:layout_width="180dp"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -52,17 +68,17 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/postResult"
+        app:layout_constraintBottom_toTopOf="@+id/deserializationResult"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toEndOf="@+id/getButton"
+        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintStart_toEndOf="@+id/deserializationButton"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.86" />
+        app:layout_constraintVertical_bias="0.872" />
 
     <TextView
-        android:id="@+id/postResult"
+        android:id="@+id/deserializationResult"
         android:layout_width="180dp"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="296dp"
@@ -73,8 +89,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toEndOf="@+id/postButton" />
+        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintStart_toEndOf="@+id/serializationButton" />
 
 
 </android.support.constraint.ConstraintLayout>
