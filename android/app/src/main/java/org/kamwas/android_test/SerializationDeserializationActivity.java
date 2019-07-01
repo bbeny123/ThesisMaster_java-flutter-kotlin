@@ -58,7 +58,7 @@ public class SerializationDeserializationActivity extends AppCompatActivity {
         for (int i = 0; i < 1000; i++) {
             timer = nanoTime();
             serialized = serialize(user);
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
         }
 
         Log.i("SerializationDeserializationActivity", "Serialization benchmark finished");
@@ -76,7 +76,7 @@ public class SerializationDeserializationActivity extends AppCompatActivity {
         for (int i = 0; i < 1000; i++) {
             timer = nanoTime();
             user = deserialize(serialized);
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
         }
 
         Log.i("SerializationDeserializationActivity", "Serialization result: " + user.toString());

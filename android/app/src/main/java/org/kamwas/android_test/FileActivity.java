@@ -60,7 +60,7 @@ public class FileActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             timer = nanoTime();
             saveFile(file);
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
             deleteFile();
         }
 
@@ -77,7 +77,7 @@ public class FileActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             timer = nanoTime();
             readFile();
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
         }
 
         deleteFile();
@@ -94,7 +94,7 @@ public class FileActivity extends AppCompatActivity {
             saveFile(file);
             timer = nanoTime();
             deleteFile();
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
         }
         Log.i("FileActivity", "Delete File finished");
         Utils.setResult(textView, result, 10);

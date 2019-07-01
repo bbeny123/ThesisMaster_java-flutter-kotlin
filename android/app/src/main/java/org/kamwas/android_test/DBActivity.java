@@ -79,7 +79,7 @@ public class DBActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             timer = nanoTime();
             db.addOne(i, "login " + i, "email " + i, "name " + i, 30);
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
         }
 
         Log.i("DBActivity", "DB Add One Benchmark finished");
@@ -95,7 +95,7 @@ public class DBActivity extends AppCompatActivity {
         for (int i = 0; i < 1000; i++) {
             timer = nanoTime();
             db.getOne(toRead.get(i));
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
         }
 
         Log.i("DBActivity", "DB Read One Benchmark finished");
@@ -110,7 +110,7 @@ public class DBActivity extends AppCompatActivity {
         for (int i = 0; i < 1000; i++) {
             timer = nanoTime();
             db.getAll().getCount();
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
         }
 
         Log.i("DBActivity", "DB Read All Benchmark finished");
@@ -126,7 +126,7 @@ public class DBActivity extends AppCompatActivity {
         for (int i = 0; i < 1000; i++) {
             timer = nanoTime();
             db.updateOne(toUpdate.get(i), i);
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
         }
 
         Log.i("DBActivity", "DB Update One Benchmark finished");
@@ -142,7 +142,7 @@ public class DBActivity extends AppCompatActivity {
             db.recreateTableWithData();
             timer = nanoTime();
             db.deleteOne(toDelete.get(i));
-            result = nanoTime() - timer;
+            result += nanoTime() - timer;
         }
 
         Log.i("DBActivity", "DB Delete One Benchmark finished");
