@@ -15,9 +15,11 @@ public class MainActivity extends AppCompatActivity {
 
         Button restButton = findViewById(R.id.restButton);
         Button deserButton = findViewById(R.id.deserButton);
+        Button fileButton = findViewById(R.id.fileButton);
 
         restButton.setOnClickListener(b -> goToActivity(RestActivity.class));
         deserButton.setOnClickListener(b -> goToActivity(SerializationDeserializationActivity.class));
+        fileButton.setOnClickListener(b -> goToActivity(FileActivity.class));
     }
 
     private void goToActivity(Class<? extends AppCompatActivity> clz) {

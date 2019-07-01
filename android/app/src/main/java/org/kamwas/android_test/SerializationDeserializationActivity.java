@@ -33,7 +33,6 @@ public class SerializationDeserializationActivity extends AppCompatActivity {
         serializationStart.setOnClickListener(b -> {
             Utils.start(serializationResult);
             Utils.start(deserializationResult);
-            benchmark(serializationResult, deserializationResult);
             serialize(serializationResult);
             deserialize(deserializationResult);
         });
@@ -50,11 +49,6 @@ public class SerializationDeserializationActivity extends AppCompatActivity {
 
     }
 
-    public void benchmark(TextView sTextView, TextView dTextView) {
-        serialize(sTextView);
-        deserialize(dTextView);
-    }
-
     public void serialize(TextView textView) {
         User user = new User(1L, "user", "user@user", "user", 30);
         byte[] serialized = null;
@@ -62,55 +56,52 @@ public class SerializationDeserializationActivity extends AppCompatActivity {
         long timer;
 
         for (int i = 0; i < 1000; i++) {
-            try {
-                timer = nanoTime();
-                serialized = serialize(user);
-                result = nanoTime() - timer;
-            } catch (Exception ex) {
-                Log.d("SerializationDeserializationActivity", "Serialization Error", ex);
-            }
-
+            timer = nanoTime();
+            serialized = serialize(user);
+            result = nanoTime() - timer;
         }
+
         Log.i("SerializationDeserializationActivity", "Serialization benchmark finished");
         Utils.setResult(textView, result, 1000);
     }
 
     public void deserialize(TextView textView) {
         byte[] serialized = null;
-        try {
-            serialized = serialize(new User(1L, "user", "user@user", "user", 30));
-        } catch (Exception ex) {
-            Log.d("SerializationDeserializationActivity", "Deserialization Error", ex);
-        }
+        serialized = serialize(new User(1L, "user", "user@user", "user", 30));
+
         User user = null;
         long result = 0L;
         long timer = 0L;
 
         for (int i = 0; i < 1000; i++) {
-            try {
-                timer = nanoTime();
-                user = deserialize(serialized);
-                result = nanoTime() - timer;
-            } catch (Exception ex) {
-                Log.d("SerializationDeserializationActivity", "Deserialization Error", ex);
-            }
+            timer = nanoTime();
+            user = deserialize(serialized);
+            result = nanoTime() - timer;
         }
+
         Log.i("SerializationDeserializationActivity", "Serialization result: " + user.toString());
         Utils.setResult(textView, result, 1000);
     }
 
-    public byte[] serialize(User user) throws Exception {
+    public byte[] serialize(User user) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(bos);
-        out.writeObject(user);
-        out.close();
+        try (ObjectOutputStream out = new ObjectOutputStream(bos)) {
+            out.writeObject(user);
+        } catch (Exception ex) {
+            Log.d("SerializationDeserializationActivity", "Serialization Error", ex);
+        }
         return bos.toByteArray();
     }
 
-    public User deserialize(byte[] user) throws Exception {
+    public User deserialize(byte[] user) {
+        User result = null;
         ByteArrayInputStream bis = new ByteArrayInputStream(user);
-        ObjectInputStream in = new ObjectInputStream(bis);
-        return (User) in.readObject();
+        try (ObjectInputStream in = new ObjectInputStream(bis)) {
+            result = (User) in.readObject();
+        } catch (Exception ex) {
+            Log.d("SerializationDeserializationActivity", "Deserialization Error", ex);
+        }
+        return result;
     }
 
 }

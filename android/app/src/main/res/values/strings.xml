@@ -4,4 +4,5 @@
     <string name="title_activity_serialization_deserialization">
         Serialization &amp; Deserialization
     </string>
+    <string name="title_activity_file">File</string>
 </resources>

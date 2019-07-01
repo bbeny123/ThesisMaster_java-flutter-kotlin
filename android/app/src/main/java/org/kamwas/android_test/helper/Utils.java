@@ -11,7 +11,7 @@ public class Utils {
     }
 
     public static void setResult(TextView textView, long result, int tests) {
-        textView.setText(String.format(Locale.UK, "%.2f ms", (double) result / tests / 1000));
+        textView.setText(String.format(Locale.UK, "%.2f µs", (double) result / tests / 1000));
     }
 
     public static void start(TextView textView) {
