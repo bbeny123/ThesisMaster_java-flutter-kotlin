@@ -15,13 +15,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".FileActivity"
-            android:label="@string/title_activity_file"
+            android:name=".DBActivity"
+            android:label="@string/title_activity_db"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.kamwas.android_test.MainActivity" />
+        </activity>
+        <activity
+            android:name=".FileActivity"
+            android:label="@string/title_activity_file"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="org.kamwas.android_test.MainActivity" />
+
         <activity
             android:name=".SerializationDeserializationActivity"
             android:label="@string/title_activity_serialization_deserialization"

@@ -29,22 +29,12 @@ public class FileActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button fileStart  = findViewById(R.id.fileStart);
         Button saveButton  = findViewById(R.id.saveButton);
         Button readButton  = findViewById(R.id.readButton);
         Button deleteButton  = findViewById(R.id.deleteButton);
         TextView saveResult  = findViewById(R.id.saveResult);
         TextView readResult  = findViewById(R.id.readResult);
         TextView deleteResult  = findViewById(R.id.deleteResult);
-
-        fileStart.setOnClickListener(b -> {
-            Utils.start(saveResult);
-            Utils.start(readResult);
-            Utils.start(deleteResult);
-            AsyncTask.execute(() -> saveFile(saveResult));
-            AsyncTask.execute(() -> readFile(readResult));
-            AsyncTask.execute(() -> deleteFile(deleteResult));
-        });
 
         saveButton.setOnClickListener(b -> {
             Utils.start(saveResult);
@@ -67,7 +57,7 @@ public class FileActivity extends AppCompatActivity {
         long timer;
         byte[] file = generateFile(FILE_SIZE);
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             timer = nanoTime();
             saveFile(file);
             result = nanoTime() - timer;
@@ -75,7 +65,7 @@ public class FileActivity extends AppCompatActivity {
         }
 
         Log.i("FileActivity", "Save File finished");
-        Utils.setResult(textView, result, 1000);
+        Utils.setResult(textView, result, 10);
     }
 
     public void readFile(TextView textView) {
