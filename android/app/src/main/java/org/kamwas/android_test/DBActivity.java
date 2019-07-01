@@ -76,14 +76,14 @@ public class DBActivity extends AppCompatActivity {
         long timer;
 
         db.recreateTable();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             timer = nanoTime();
             db.addOne(i, "login " + i, "email " + i, "name " + i, 30);
             result = nanoTime() - timer;
         }
 
         Log.i("DBActivity", "DB Add One Benchmark finished");
-        Utils.setResult(textView, result, 1000);
+        Utils.setResult(textView, result, 10);
     }
 
     public void getOne(TextView textView) {
