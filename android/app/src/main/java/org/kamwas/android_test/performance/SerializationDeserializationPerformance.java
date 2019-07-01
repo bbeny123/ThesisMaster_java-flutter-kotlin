@@ -1,4 +1,6 @@
-package org.kamwas.android_test;
+package org.kamwas.android_test.performance;
+
+import org.kamwas.android_test.helper.User;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

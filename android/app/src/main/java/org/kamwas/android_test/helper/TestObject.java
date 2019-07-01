@@ -1,4 +1,4 @@
-package org.kamwas.android_test;
+package org.kamwas.android_test.helper;
 
 public class TestObject {
 

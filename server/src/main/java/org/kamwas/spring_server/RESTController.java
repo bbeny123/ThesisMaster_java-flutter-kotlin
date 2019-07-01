@@ -17,13 +17,13 @@ public class RESTController {
 
     @GetMapping("/")
     public ResponseEntity<?> get() {
-        logger.info("GET called");
+//        logger.info("GET called");
         return ok(new User(1L, "user", "user@user", "user", 30));
     }
 
     @PostMapping("/")
     public ResponseEntity<?> post(@RequestBody User user) {
-        logger.info("POST called - " + user.toString());
+//        logger.info("POST called - " + user.toString());
         return ok().build();
     }
 

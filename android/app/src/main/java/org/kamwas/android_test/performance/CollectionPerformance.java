@@ -1,6 +1,8 @@
-package org.kamwas.android_test;
+package org.kamwas.android_test.performance;
 
 import android.util.Log;
+
+import org.kamwas.android_test.helper.TestObject;
 
 import java.util.ArrayList;
 import java.util.Collections;

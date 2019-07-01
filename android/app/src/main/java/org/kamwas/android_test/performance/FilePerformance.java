@@ -1,4 +1,4 @@
-package org.kamwas.android_test;
+package org.kamwas.android_test.performance;
 
 import android.content.Context;
 import android.util.Log;
