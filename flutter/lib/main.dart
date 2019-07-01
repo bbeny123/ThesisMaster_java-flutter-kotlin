@@ -1,6 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
+import 'DeSer.dart';
+import 'helper/User.dart';
+
 void main() => runApp(MaterialApp(home: MyApp()));
+
+const String NO_DATA = 'NO DATA';
 
 class MyApp extends StatelessWidget {
   @override
@@ -569,6 +576,9 @@ class File extends StatelessWidget {
 }
 
 class Deser extends StatelessWidget {
+  var serialization = new TextEditingController(text: NO_DATA);
+  var deserialization = new TextEditingController(text: NO_DATA);
+  var deser = new DeSer();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -588,12 +598,10 @@ class Deser extends StatelessWidget {
                         buttonColor: Colors.white30,
                         child: RaisedButton(
                             child: Text('SERIALIZATION', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
+                            onPressed: () async {
+                              serialization.text = 'TESTING';
+                              String result = await formatResult(deser.serialize(new User(1, 'user', 'user@user', 'user', 30)));
+                              serialization.text = result;
                             })
                     ),
                     Padding(
@@ -601,7 +609,7 @@ class Deser extends StatelessWidget {
                     ),
                     Container(
                         width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
+                        child: TextField(controller: serialization, textAlign: TextAlign.center)
                     )
                   ],
                 ),
@@ -617,12 +625,10 @@ class Deser extends StatelessWidget {
                         buttonColor: Colors.white30,
                         child: RaisedButton(
                             child: Text('DESERIALIZATION', textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecondRoute()),
-                              );
+                            onPressed: () async {
+                              deserialization.text = 'TESTING';
+                              String result = await formatResult(deser.deserialize(new User(1, 'user', 'user@user', 'user', 30)));
+                              deserialization.text = result;
                             })
                     ),
                     Padding(
@@ -630,7 +636,7 @@ class Deser extends StatelessWidget {
                     ),
                     Container(
                         width: 160,
-                        child: Text('NO DATA', textAlign: TextAlign.center,)
+                        child: TextField(controller: deserialization, textAlign: TextAlign.center)
                     )
                   ],
                 )
@@ -712,4 +718,9 @@ class REST extends StatelessWidget {
         )
     );
   }
+}
+
+String formatResult(double result){
+  double mod = pow(10.0, 3);
+  return ((result * mod).round().toDouble() / mod).toString();
 }
