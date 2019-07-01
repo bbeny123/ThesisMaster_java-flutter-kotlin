@@ -17,7 +17,11 @@
         <activity
             android:name=".FileActivity"
             android:label="@string/title_activity_file"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.kamwas.android_test.MainActivity" />
         <activity
             android:name=".SerializationDeserializationActivity"
             android:label="@string/title_activity_serialization_deserialization"
