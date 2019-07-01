@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'CollectionsBenchmark.dart';
 import 'DeserBenchmark.dart';
+import 'RESTBenchmark.dart';
 
 const String NO_DATA = 'NO DATA';
 
@@ -16,20 +17,19 @@ class MyApp extends StatelessWidget {
       ),
       body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buttonNavigate(context, 'COLLECTIONS', Collections()),
-              Padding(padding: EdgeInsets.all(8.0)),
-              _buttonNavigate(context, 'REST', REST()),
-              Padding(padding: EdgeInsets.all(8.0)),
-              _buttonNavigate(context, 'DB', DB()),
-              Padding(padding: EdgeInsets.all(8.0)),
-              _buttonNavigate(context, 'SERIALIZATION\nDESERIALIZATION', Deser()),
-              Padding(padding: EdgeInsets.all(8.0)),
-              _buttonNavigate(context, 'FILE', File())
-            ],
-          )
-      ),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buttonNavigate(context, 'COLLECTIONS', Collections()),
+          Padding(padding: EdgeInsets.all(8.0)),
+          _buttonNavigate(context, 'REST', REST()),
+          Padding(padding: EdgeInsets.all(8.0)),
+          _buttonNavigate(context, 'DB', DB()),
+          Padding(padding: EdgeInsets.all(8.0)),
+          _buttonNavigate(context, 'SERIALIZATION\nDESERIALIZATION', Deser()),
+          Padding(padding: EdgeInsets.all(8.0)),
+          _buttonNavigate(context, 'FILE', File())
+        ],
+      )),
     );
   }
 }
@@ -69,24 +69,50 @@ class Collections extends StatelessWidget {
           title: Text("Collections"),
         ),
         body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _row(context, RaisedButton(child: _buttonText('ADD ONE'), onPressed: () async => benchmark.addOne(addOne)), addOne),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('READ ALL'), onPressed: () async  => benchmark.readAll(readAll)), readAll),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('READ RANDOM'), onPressed: () async  => benchmark.readRandom(readRandom)), readRandom),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('REMOVE ONE'), onPressed: () async  => benchmark.removeOne(removeOne)), removeOne),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('FILTER'), onPressed: () async  => benchmark.filter(filter)), filter),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('SORT'), onPressed: () async  => benchmark.sort(sort)), sort)
-              ]
-          ),
-        )
-    );
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('ADD ONE'),
+                    onPressed: () async => benchmark.addOne(addOne)),
+                addOne),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('READ ALL'),
+                    onPressed: () async => benchmark.readAll(readAll)),
+                readAll),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('READ RANDOM'),
+                    onPressed: () async => benchmark.readRandom(readRandom)),
+                readRandom),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('REMOVE ONE'),
+                    onPressed: () async => benchmark.removeOne(removeOne)),
+                removeOne),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('FILTER'),
+                    onPressed: () async => benchmark.filter(filter)),
+                filter),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('SORT'),
+                    onPressed: () async => benchmark.sort(sort)),
+                sort)
+          ]),
+        ));
   }
 }
 
@@ -104,22 +130,43 @@ class DB extends StatelessWidget {
           title: Text("DB"),
         ),
         body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _row(context, RaisedButton(child: _buttonText('ADD ONE'), onPressed: () => _navigate(context, SecondRoute())), addOne),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('GET ONE'), onPressed: () => _navigate(context, SecondRoute())), getOne),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('GET ALL'), onPressed: () => _navigate(context, SecondRoute())), getAll),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('UPDATE ONE'), onPressed: () => _navigate(context, SecondRoute())), updateOne),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('DELETE ONE'), onPressed: () => _navigate(context, SecondRoute())), deleteOne)
-              ]
-          ),
-        )
-    );
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('ADD ONE'),
+                    onPressed: () => _navigate(context, SecondRoute())),
+                addOne),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('GET ONE'),
+                    onPressed: () => _navigate(context, SecondRoute())),
+                getOne),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('GET ALL'),
+                    onPressed: () => _navigate(context, SecondRoute())),
+                getAll),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('UPDATE ONE'),
+                    onPressed: () => _navigate(context, SecondRoute())),
+                updateOne),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('DELETE ONE'),
+                    onPressed: () => _navigate(context, SecondRoute())),
+                deleteOne)
+          ]),
+        ));
   }
 }
 
@@ -135,18 +182,29 @@ class File extends StatelessWidget {
           title: Text("File"),
         ),
         body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _row(context, RaisedButton(child: _buttonText('SAVE'), onPressed: () => _navigate(context, SecondRoute())), save),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('READ'), onPressed: () => _navigate(context, SecondRoute())), read),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('DELETE'), onPressed: () => _navigate(context, SecondRoute())), delete)
-              ]
-          ),
-        )
-    );
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('SAVE'),
+                    onPressed: () => _navigate(context, SecondRoute())),
+                save),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('READ'),
+                    onPressed: () => _navigate(context, SecondRoute())),
+                read),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('DELETE'),
+                    onPressed: () => _navigate(context, SecondRoute())),
+                delete)
+          ]),
+        ));
   }
 }
 
@@ -162,20 +220,27 @@ class Deser extends StatelessWidget {
           title: Text("Serialization & Deserialization"),
         ),
         body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _row(context, RaisedButton(child: _buttonText('SERIALIZATION'), onPressed: () => benchmark.serialize(serialization)), serialization),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('DESERIALIZATION'), onPressed: () => benchmark.deserialize(deserialization)), deserialization)
-              ]
-          ),
-        )
-    );
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('SERIALIZATION'),
+                    onPressed: () => benchmark.serialize(serialization)),
+                serialization),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('DESERIALIZATION'),
+                    onPressed: () => benchmark.deserialize(deserialization)),
+                deserialization)
+          ]),
+        ));
   }
 }
 
 class REST extends StatelessWidget {
+  var benchmark = new RESTBenchmark();
   var get = new TextEditingController(text: NO_DATA);
   var post = new TextEditingController(text: NO_DATA);
 
@@ -186,20 +251,27 @@ class REST extends StatelessWidget {
           title: Text("REST"),
         ),
         body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _row(context, RaisedButton(child: _buttonText('GET'), onPressed: () => _navigate(context, SecondRoute())), get),
-                Padding(padding: EdgeInsets.all(8.0)),
-                _row(context, RaisedButton(child: _buttonText('POST'), onPressed: () => _navigate(context, SecondRoute())), post)
-              ]
-          ),
-        )
-    );
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('GET'),
+                    onPressed: () => benchmark.get(get)),
+                get),
+            Padding(padding: EdgeInsets.all(8.0)),
+            _row(
+                context,
+                RaisedButton(
+                    child: _buttonText('POST'),
+                    onPressed: () => benchmark.post(post)),
+                post)
+          ]),
+        ));
   }
 }
 
-Row _row(BuildContext context, RaisedButton button, TextEditingController textField) {
+Row _row(BuildContext context, RaisedButton button,
+    TextEditingController textField) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -207,29 +279,26 @@ Row _row(BuildContext context, RaisedButton button, TextEditingController textFi
           minWidth: 160,
           height: 40,
           buttonColor: Colors.white30,
-          child: button
-      ),
+          child: button),
       Padding(
         padding: EdgeInsets.all(8.0),
       ),
       Container(
           width: 160,
-          child: TextField(controller: textField, textAlign: TextAlign.center)
-      )
+          child: TextField(controller: textField, textAlign: TextAlign.center))
     ],
   );
 }
 
-ButtonTheme _buttonNavigate(BuildContext context, String buttonText, Widget widget) {
+ButtonTheme _buttonNavigate(
+    BuildContext context, String buttonText, Widget widget) {
   return ButtonTheme(
       minWidth: 160,
       height: 40,
       buttonColor: Colors.white30,
       child: RaisedButton(
           child: _buttonText(buttonText),
-          onPressed: () => _navigate(context, widget)
-      )
-  );
+          onPressed: () => _navigate(context, widget)));
 }
 
 Text _buttonText(String text) {
@@ -239,7 +308,6 @@ Text _buttonText(String text) {
 void _navigate(BuildContext context, StatelessWidget widget) {
   Navigator.push(
     context,
-    MaterialPageRoute(
-        builder: (context) => widget),
+    MaterialPageRoute(builder: (context) => widget),
   );
 }

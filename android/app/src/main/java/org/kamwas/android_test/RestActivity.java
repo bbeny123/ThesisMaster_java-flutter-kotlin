@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONObject;
-import org.kamwas.android_test.R;
 import org.kamwas.android_test.helper.User;
 import org.kamwas.android_test.helper.Utils;
 
@@ -69,9 +68,9 @@ public class RestActivity extends AppCompatActivity {
                     user.setName(json.getString("name"));
                     user.setAge(json.getInt("age"));
                     connection.disconnect();
-                    result += nanoTime() - timer;
-                    Log.i("RestActivity", "GET result: " + user.toString());
                 }
+                result += nanoTime() - timer;
+//                Log.i("RestActivity", "GET result: " + user.toString());
             } catch (Exception ex) {
                 Log.d("RestActivity", "GET error", ex);
                 break;
@@ -81,10 +80,11 @@ public class RestActivity extends AppCompatActivity {
     }
 
     public void post(TextView textView) {
+        User user = new User(1L, "user", "user@user", "user", 30);
         long result = 0L;
         long timer = 0L;
+
         for (int i = 0; i < 1000; i++) {
-            User user = new User(1L, "user", "user@user", "user", 30);
             timer = nanoTime();
             try {
                 URL url = new URL("http://10.0.2.2:8080");
@@ -104,9 +104,9 @@ public class RestActivity extends AppCompatActivity {
                 out.close();
                 if (connection.getResponseCode() == 200) {
                     connection.disconnect();
-                    result += nanoTime() - timer;
-                    Log.i("RestActivity", "POST success");
                 }
+                result += nanoTime() - timer;
+//                Log.i("RestActivity", "POST success");
             } catch (Exception ex) {
                 Log.d("RestActivity", "POST error", ex);
             }
