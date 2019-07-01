@@ -10,6 +10,17 @@ public class User implements Serializable {
     private String name;
     private Integer age;
 
+    public User() {
+    }
+
+    public User(Long id, String login, String email, String name, Integer age) {
+        this.id = id;
+        this.login = login;
+        this.email = email;
+        this.name = name;
+        this.age = age;
+    }
+
     public Long getId() {
         return id;
     }
@@ -48,5 +59,16 @@ public class User implements Serializable {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

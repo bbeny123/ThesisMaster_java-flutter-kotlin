@@ -1,6 +1,7 @@
 package org.kamwas.android_test;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,7 +25,7 @@ public class FilePerformance {
         try (FileOutputStream out = new FileOutputStream(file)) {
             out.write(data);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Log.d("FilePerformance", ex.getMessage());
         }
     }
 
@@ -35,7 +36,7 @@ public class FilePerformance {
         try (FileInputStream in = new FileInputStream(file)) {
             in.read(data);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Log.d("FilePerformance", ex.getMessage());
         }
 
         return data;

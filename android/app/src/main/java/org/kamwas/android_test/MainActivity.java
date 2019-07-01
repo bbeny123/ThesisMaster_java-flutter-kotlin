@@ -18,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
 
         CollectionPerformance collectionPerformance = new CollectionPerformance();
+        RESTPerformance restPerformance = new RESTPerformance();
         button.setOnClickListener(b -> {
+            restPerformance.postAsync();
             textView2.setText(collectionPerformance.sort() + "");
         });
 
