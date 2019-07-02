@@ -6,23 +6,7 @@ import 'helper/User.dart';
 
 class RESTBenchmark {
 
-  double get() {
-    double timer;
-    getTest().then((result) {
-      timer = result;
-    });
-    return timer;
-  }
-
-  double post() {
-    double timer;
-    postTest().then((result) {
-      timer = result;
-    });
-    return timer;
-  }
-
-  Future<double> getTest() async {
+  Future<double> get() async {
     int result = 0;
     int timer = 0;
     User user;
@@ -40,7 +24,7 @@ class RESTBenchmark {
     return result / 1000;
   }
 
-  Future<double> postTest() async {
+  Future<double> post() async {
     User user = new User(1, 'user', 'user@user', 'user', 30);
     int result = 0;
     int timer = 0;

@@ -5,7 +5,7 @@ class DeserBenchmark {
 
   User _user = new User(1, 'user', 'user@user', 'user', 30);
 
-  double serialize() {
+  Future<double> serialize() async {
     int timer;
     int result = 0;
     String json;
@@ -20,7 +20,7 @@ class DeserBenchmark {
     return result / 1000;
   }
 
-  double deserialize() {
+  Future<double> deserialize() async {
     int timer;
     int result = 0;
     String json = jsonEncode(_user);

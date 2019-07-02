@@ -188,7 +188,7 @@ class File extends StatelessWidget {
   }
 }
 
-Row _row(TextEditingController text, String btnText, double Function() method) {
+Row _row(TextEditingController text, String btnText, Future<double> Function() method) {
   return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -217,9 +217,9 @@ ButtonTheme _menu(BuildContext ctx, String text, Widget widget) {
   );
 }
 
-void _benchmark(TextEditingController text, double Function() method) {
+void _benchmark(TextEditingController text, Future<double> Function() method) async {
   text.text = 'TESTING';
-  double result = method();
+  double result = await method();
   double mod = pow(10.0, 3);
   text.text = ((result * mod).round().toDouble() / mod).toString() + ' µs';
 }

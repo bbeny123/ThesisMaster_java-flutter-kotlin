@@ -13,7 +13,7 @@ class FileBenchmark {
     _path = (await getApplicationDocumentsDirectory()).path;
   }
 
-  double saveFileTest() {
+  Future<double> saveFileTest() async {
     int result = 0;
     int timer;
     List<int> file = readFile();
@@ -28,7 +28,7 @@ class FileBenchmark {
     return result / 10;
   }
 
-  double readFileTest() {
+  Future<double> readFileTest() async {
     int result = 0;
     int timer;
 
@@ -41,7 +41,7 @@ class FileBenchmark {
     return result / 10;
   }
 
-  double deleteFileTest() {
+  Future<double> deleteFileTest() async {
     int result = 0;
     int timer;
     List<int> file = readFile();

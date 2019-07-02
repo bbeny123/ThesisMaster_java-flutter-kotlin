@@ -31,77 +31,73 @@ class DBBenchmark {
     }
   }
 
-  double addOneResult() {
+  Future<double> addOneResult() async {
     int result = 0;
     int timer;
     recreateTable();
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 100; i++) {
       timer = DateTime.now().microsecondsSinceEpoch;
-      addOne(i, "login $i", "email $i", "name $i", 30).then((result) {});
+      await addOne(i, "login $i", "email $i", "name $i", 30);
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
-    return result / 10;
+    return result / 100;
   }
 
-  double getOneResult() {
+  Future<double> getOneResult() async {
     int result = 0;
     int timer;
-    recreateTableWithData().then((result) {});
+    await recreateTableWithData();
 
     for (int i = 0; i < 1000; i++) {
       int j = new Random().nextInt(1000);
       timer = DateTime.now().microsecondsSinceEpoch;
-      getOne(j).then((result) {
-        result.length;
-      });
+      (await getOne(j)).length;
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
     return result / 1000;
   }
 
-  double getAllResult() {
+  Future<double> getAllResult() async {
     int result = 0;
     int timer;
-    recreateTableWithData().then((result) {});
+    await recreateTableWithData();
 
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 100; i++) {
       timer = DateTime.now().microsecondsSinceEpoch;
-      getAll().then((result) {
-        result.length;
-      });
+      (await getAll()).length;
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
-    return result / 1000;
+    return result / 100;
   }
 
-  double updateOneResult() {
+  Future<double> updateOneResult() async {
     int result = 0;
     int timer;
-    recreateTableWithData().then((result) {});
+    await recreateTableWithData();
 
     for (int i = 0; i < 1000; i++) {
       int j = new Random().nextInt(1000);
       timer = DateTime.now().microsecondsSinceEpoch;
-      updateOne(j, i).then((result) {});
+      await updateOne(j, i);
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 
     return result / 1000;
   }
 
-  double deleteOneResult() {
+  Future<double> deleteOneResult() async {
     int result = 0;
     int timer;
 
     for (int i = 0; i < 10; i++) {
-      recreateTableWithData().then((result) {});
+      await recreateTableWithData();
       int j = new Random().nextInt(1000);
       timer = DateTime.now().microsecondsSinceEpoch;
-      deleteOne(j).then((result) {});
+      await deleteOne(j);
       result += DateTime.now().microsecondsSinceEpoch - timer;
     }
 

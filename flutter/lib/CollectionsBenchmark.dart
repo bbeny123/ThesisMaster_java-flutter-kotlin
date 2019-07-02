@@ -1,10 +1,9 @@
 import 'dart:math';
-import 'package:flutter/widgets.dart';
 import 'helper/TestObject.dart';
 
 class CollectionsBenchmark {
 
-  double readAll() {
+  Future<double> readAll() async {
     double result = 0;
     for (int i = 0; i < 100; i++) {
       result += read10k();
@@ -12,7 +11,7 @@ class CollectionsBenchmark {
     return result / 100;
   }
 
-  double filter() {
+  Future<double> filter() async {
     double result = 0;
     for (int i = 0; i < 100; i++) {
       result += filterTest();
@@ -20,7 +19,7 @@ class CollectionsBenchmark {
     return result / 100;
   }
 
-  double sort() {
+  Future<double> sort() async {
     double result = 0;
     for (int i = 0; i < 100; i++) {
       result += sortTest();
@@ -28,7 +27,7 @@ class CollectionsBenchmark {
     return result / 100;
   }
 
-  double add10kObjects() {
+  Future<double> add10kObjects() async {
     int timer = DateTime.now().microsecondsSinceEpoch;
     List<TestObject> list = new List();
     for(int i = 0; i < 10000; i++) {
@@ -57,7 +56,7 @@ class CollectionsBenchmark {
     return timer / 1.0;
   }
 
-  double read1kRandom() {
+  Future<double> read1kRandom() async {
     int dummy = 0;
     List<TestObject> list = new List();
     List<int> toRead = new List();
@@ -78,7 +77,7 @@ class CollectionsBenchmark {
     return timer / 1000;
   }
 
-  double remove1kRandom() {
+  Future<double> remove1kRandom() async {
     List<TestObject> list = new List();
     List<int> toRemove = new List();
     for (int i = 0; i < 10000; i++) {
