@@ -13,8 +13,8 @@ class RESTActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        getButton.setOnClickListener { Util.benchmark(getResult) { CollectionBenchmark.add10k() } }
-        postButton.setOnClickListener { Util.benchmark(postResult) { CollectionBenchmark.read10k() } }
+        getButton.setOnClickListener { RESTBenchmark.get { result -> Util.benchmark(getResult) { result } } }
+        postButton.setOnClickListener { RESTBenchmark.post { result -> Util.benchmark(postResult) { result } } }
     }
 
 }
