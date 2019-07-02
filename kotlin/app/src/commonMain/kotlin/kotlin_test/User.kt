@@ -1,7 +1,6 @@
 package kotlin_test
 
-@Serializable
-data class User {
+class User {
 
     var id: Long? = null
     var login: String? = null
