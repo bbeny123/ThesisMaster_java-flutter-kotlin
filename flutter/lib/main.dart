@@ -221,5 +221,5 @@ void _benchmark(TextEditingController text, Future<double> Function() method) as
   text.text = 'TESTING';
   double result = await method();
   double mod = pow(10.0, 3);
-  text.text = ((result * mod).round().toDouble() / mod).toString() + ' µs';
+  text.text = (((result / 1000) * mod).round().toDouble() / mod).toString() + ' µs';
 }
