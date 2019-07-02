@@ -1,0 +1,12 @@
+pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "kotlin-multiplatform") {
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.40")
+            }
+        }
+    }
+}
+rootProject.name = 'kotlin'
+
+include ':app'
