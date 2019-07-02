@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 object RESTBenchmark {
 
     private const val times = 500
+    private var timer = 0L
 
     private val URL = Url("http://10.0.2.2:8080")
     private val client = HttpClient {
@@ -24,7 +25,6 @@ object RESTBenchmark {
         var result = 0L
         var dummy = 0L
 
-        var timer = 0L
         repeat(times) {
             timer = Util.getNanoTime()
             dummy += get().id
@@ -38,7 +38,6 @@ object RESTBenchmark {
     fun post(callback: (Double) -> Unit) = GlobalScope.launch {
         var result = 0L
 
-        var timer = 0L
         repeat(times) {
             timer = Util.getNanoTime()
             post()

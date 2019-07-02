@@ -8,6 +8,7 @@ class DBBenchmark(driver: SqlDriver) {
 
     private val times = 1000
     private val tableSize = 10000
+    private var timer = 0L
 
     private val userQueries: UserQueries = TestDB(driver).userQueries
 
@@ -16,7 +17,6 @@ class DBBenchmark(driver: SqlDriver) {
 
         clearTable()
         var user: User
-        var timer: Long
         repeat(times) {
             user = dummyUser(it)
             timer = Util.getNanoTime()
@@ -31,7 +31,6 @@ class DBBenchmark(driver: SqlDriver) {
         var result = 0L
 
         prepareData(tableSize)
-        var timer: Long
         var dummy = 0L
         var id: Long
         repeat(times) {
@@ -49,9 +48,8 @@ class DBBenchmark(driver: SqlDriver) {
         var result = 0L
 
         prepareData(tableSize)
-        var timer: Long
         var dummy = 0
-        repeat(times  / 20) {
+        repeat(times / 20) {
             timer = Util.getNanoTime()
             dummy += findAll().size
             result += Util.getNanoTime() - timer
@@ -65,7 +63,6 @@ class DBBenchmark(driver: SqlDriver) {
         var result = 0L
 
         prepareData(tableSize)
-        var timer: Long
         var id: Long
         repeat(times) {
             id = Random.nextLong(tableSize.toLong())
@@ -82,7 +79,6 @@ class DBBenchmark(driver: SqlDriver) {
         var result = 0L
 
         prepareData(tableSize + times)
-        var timer: Long
         var id: Long
         repeat(times) {
             id = Random.nextLong(tableSize.toLong())

@@ -5,13 +5,15 @@ import kotlinx.serialization.json.JsonConfiguration
 
 object DeSerBenchmark {
 
+    private const val times = 10000
+    private var timer = 0L
+
     fun serialization(): Double {
-        val times = 10000
         var result = 0L
         var dummy = ""
 
         repeat(times) {
-            val timer = Util.getNanoTime()
+            timer = Util.getNanoTime()
             dummy = serialize()
             result += Util.getNanoTime() - timer
         }
@@ -21,13 +23,12 @@ object DeSerBenchmark {
     }
 
     fun deserialization(): Double {
-        val times = 10000
         var result = 0L
         var dummy = 0L
 
         val user = serialize()
         repeat(times) {
-            val timer = Util.getNanoTime()
+            timer = Util.getNanoTime()
             dummy += deserialize(user).id
             result += Util.getNanoTime() - timer
         }
