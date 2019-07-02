@@ -2,8 +2,6 @@ package kotlin_test
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import kotlinx.android.synthetic.main.activity_main.*
 
 actual class Main {
     actual fun checkMe() = 44
@@ -21,8 +19,6 @@ class MainActivity : AppCompatActivity() {
         Main().checkMe()
         setContentView(R.layout.activity_main)
 
-        Log.d("asd", hello())
-        dupa.text = hello()
 
     }
 }

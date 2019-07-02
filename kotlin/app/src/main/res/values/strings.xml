@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">android-app</string>
+    <string name="app_name">Android Test</string>
+    <string name="title_activity_rest">REST</string>
+    <string name="title_activity_serialization_deserialization">
+        Serialization &amp; Deserialization
+    </string>
+    <string name="title_activity_file">File</string>
+    <string name="title_activity_db">DB</string>
+    <string name="title_activity_collection">Collection</string>
 </resources>
