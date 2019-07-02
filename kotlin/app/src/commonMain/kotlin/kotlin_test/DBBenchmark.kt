@@ -6,9 +6,10 @@ import kotlin.random.Random
 
 class DBBenchmark(driver: SqlDriver) {
 
-    private val userQueries: UserQueries = TestDB(driver).userQueries
-    private val tableSize = 10000
     private val times = 1000
+    private val tableSize = 10000
+
+    private val userQueries: UserQueries = TestDB(driver).userQueries
 
     fun insert(): Double {
         var result = 0L

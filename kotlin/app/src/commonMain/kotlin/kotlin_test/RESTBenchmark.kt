@@ -13,18 +13,20 @@ import kotlinx.coroutines.launch
 
 object RESTBenchmark {
 
+    private const val times = 500
+
     private val URL = Url("http://10.0.2.2:8080")
     private val client = HttpClient {
         install(JsonFeature)
     }
 
     fun get(callback: (Double) -> Unit) = GlobalScope.launch {
-        val times = 100
         var result = 0L
         var dummy = 0L
 
+        var timer = 0L
         repeat(times) {
-            val timer = Util.getNanoTime()
+            timer = Util.getNanoTime()
             dummy += get().id
             result += Util.getNanoTime() - timer
         }
@@ -34,11 +36,11 @@ object RESTBenchmark {
     }
 
     fun post(callback: (Double) -> Unit) = GlobalScope.launch {
-        val times = 100
         var result = 0L
 
+        var timer = 0L
         repeat(times) {
-            val timer = Util.getNanoTime()
+            timer = Util.getNanoTime()
             post()
             result += Util.getNanoTime() - timer
         }
