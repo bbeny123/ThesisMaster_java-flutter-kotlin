@@ -1,24 +1,22 @@
 package kotlin_test
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-
-actual class Main {
-    actual fun checkMe() = 44
-}
-
-actual object Platform {
-    actual val name: String = "Android"
-}
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Main().checkMe()
         setContentView(R.layout.activity_main)
 
+        collectionButton.setOnClickListener { goToActivity(CollectionActivity::class.java) }
 
     }
+
+    private fun goToActivity(clz: Class<out AppCompatActivity>) {
+        startActivity(Intent(applicationContext, clz))
+    }
+
 }

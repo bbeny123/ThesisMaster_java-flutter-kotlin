@@ -23,6 +23,9 @@ android {
             minifyEnabled false
         }
     }
+    packagingOptions {
+        exclude 'META-INF/kotlinx-serialization-runtime.kotlin_module'
+    }
 }
 
 dependencies {
