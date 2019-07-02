@@ -4,10 +4,13 @@ import kotlin.random.Random
 
 object CollectionBenchmark {
 
-    fun add10k(): Double {
-        val times = 10000
+    private const val times = 10000
+    private const val timesShort = 100
+    private const val listSize = 10000
+    private var timer = 0L
 
-        var timer = Util.getNanoTime()
+    fun add10k(): Double {
+        timer = Util.getNanoTime()
         add(times)
         timer = Util.getNanoTime() - timer
 
@@ -15,39 +18,35 @@ object CollectionBenchmark {
     }
 
     fun read10k(): Double {
-        val times = 10000
-
         val list = generateList(times)
+        val dummy: Int
 
-        var timer = Util.getNanoTime()
-        read(list)
+        timer = Util.getNanoTime()
+        dummy = read(list)
         timer = Util.getNanoTime() - timer
 
+        println(dummy)
         return timer / times.toDouble()
     }
 
-    fun read1kRandom(): Double {
-        val times = 1000
-        val listSize = 10000
+    fun read10PercentRandom(): Double {
+        val list = generateList(times * 10)
+        val toRead = generateRandomIndexes(times, times * 10)
+        val dummy: Int
 
-        val list = generateList(listSize)
-        val toRead = generateRandomIndexes(times)
-
-        var timer = Util.getNanoTime()
-        readRandom(list, toRead)
+        timer = Util.getNanoTime()
+        dummy = readRandom(list, toRead)
         timer = Util.getNanoTime() - timer
 
+        println(dummy)
         return timer / times.toDouble()
     }
 
-    fun remove1kRandom(): Double {
-        val times = 1000
-        val listSize = 10000
+    fun remove10PercentRandom(): Double {
+        val list = generateList(times * 10)
+        val toRemove = generateRandomIndexes(times, times * 10, true)
 
-        val list = generateList(listSize)
-        val toRemove = generateRandomIndexes(times, listSize, true)
-
-        var timer = Util.getNanoTime()
+        timer = Util.getNanoTime()
         removeRandom(list, toRemove)
         timer = Util.getNanoTime() - timer
 
@@ -55,41 +54,38 @@ object CollectionBenchmark {
     }
 
     fun filter(): Double {
-        val times = 100
-        val listSize = 10000
-        val minIndex = 5000
         var result = 0L
 
-        repeat(times) {
-            val list = generateList(listSize)
-            val timer = Util.getNanoTime()
+        val minIndex = listSize / 2
+        var list: ArrayList<TestObject>
+        repeat(timesShort) {
+            list = generateList()
+            timer = Util.getNanoTime()
             filter(list, minIndex)
             result += Util.getNanoTime() - timer
         }
 
-        return result / times.toDouble()
+        return result / timesShort.toDouble()
     }
 
     fun sort(): Double {
-        val times = 100
-        val listSize = 10000
         var result = 0L
-        val list = generateList(listSize)
 
-        repeat(times) {
+        val list = generateList()
+        repeat(timesShort) {
             list.shuffle()
-            val timer = Util.getNanoTime()
+            timer = Util.getNanoTime()
             sort(list)
             result += Util.getNanoTime() - timer
         }
 
-        return result / times.toDouble()
+        return result / timesShort.toDouble()
     }
 
     private fun add(times: Int = 10000): Int {
         val list = ArrayList<TestObject>()
-        repeat(times) { i ->
-            list.add(TestObject(i, "item$i"))
+        repeat(times) {
+            list.add(TestObject(it, "item$it"))
         }
         return list.size
     }
@@ -127,18 +123,18 @@ object CollectionBenchmark {
         return list.last().index
     }
 
-    private fun generateList(size: Int = 10000): ArrayList<TestObject> {
+    private fun generateList(size: Int = listSize): ArrayList<TestObject> {
         val list = ArrayList<TestObject>()
-        repeat(size) { i ->
-            list.add(TestObject(i, "item$i"))
+        repeat(size) {
+            list.add(TestObject(it, "item$it"))
         }
         return list
     }
 
-    private fun generateRandomIndexes(size: Int = 1000, until: Int = 10000, reduce: Boolean = false): List<Int> {
+    private fun generateRandomIndexes(size: Int, until: Int, reduce: Boolean = false): List<Int> {
         val list = ArrayList<Int>()
-        repeat(size) { i ->
-            list.add(Random.nextInt(until - (if (reduce) i else 0)))
+        repeat(size) {
+            list.add(Random.nextInt(until - (if (reduce) it else 0)))
         }
         return list
     }

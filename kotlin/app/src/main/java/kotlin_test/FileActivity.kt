@@ -15,7 +15,7 @@ class FileActivity : AppCompatActivity() {
 
         saveButton.setOnClickListener { Util.benchmark(saveResult) { CollectionBenchmark.add10k() } }
         readButton.setOnClickListener { Util.benchmark(readResult) { CollectionBenchmark.read10k() } }
-        deleteButton.setOnClickListener { Util.benchmark(deleteResult) { CollectionBenchmark.read1kRandom() } }
+        deleteButton.setOnClickListener { Util.benchmark(deleteResult) { CollectionBenchmark.read10PercentRandom() } }
     }
 
 }
