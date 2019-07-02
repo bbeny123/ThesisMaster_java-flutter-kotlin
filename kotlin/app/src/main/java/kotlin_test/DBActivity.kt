@@ -1,7 +1,7 @@
 package kotlin_test
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import kotlinx.android.synthetic.main.activity_collection.toolbar
 import kotlinx.android.synthetic.main.activity_db.*
