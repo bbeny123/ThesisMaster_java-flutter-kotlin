@@ -1,5 +1,6 @@
 package kotlin_test
 
+import android.os.AsyncTask
 import android.widget.TextView
 
 actual object Util {
@@ -8,12 +9,9 @@ actual object Util {
         return System.nanoTime()
     }
 
-    fun setResult(textView: TextView, result: Double) {
-        textView.text = String.format("%.3f ms", result / 1000000)
-    }
-
-    fun start(textView: TextView) {
+    fun benchmark(textView: TextView, benchmark: () -> Double) {
         textView.text = "Benchmarking"
+        AsyncTask.execute { textView.text = String.format("%.3f ms", benchmark.invoke() / 1000000) }
     }
 
 }

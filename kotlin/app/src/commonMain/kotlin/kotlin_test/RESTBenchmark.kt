@@ -1,0 +1,3 @@
+package kotlin_test
+
+object RESTBenchmark

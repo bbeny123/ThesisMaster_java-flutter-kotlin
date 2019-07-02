@@ -1,0 +1,20 @@
+package kotlin_test
+
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_collection.toolbar
+import kotlinx.android.synthetic.main.activity_rest.*
+
+class RESTActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_rest)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        getButton.setOnClickListener { Util.benchmark(getResult) { CollectionBenchmark.add10k() } }
+        postButton.setOnClickListener { Util.benchmark(postResult) { CollectionBenchmark.read10k() } }
+    }
+
+}

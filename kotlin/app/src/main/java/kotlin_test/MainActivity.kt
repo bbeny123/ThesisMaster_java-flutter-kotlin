@@ -12,6 +12,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         collectionButton.setOnClickListener { goToActivity(CollectionActivity::class.java) }
+        restButton.setOnClickListener { goToActivity(RESTActivity::class.java) }
+        dbButton.setOnClickListener { goToActivity(DBActivity::class.java) }
+        deserButton.setOnClickListener { goToActivity(DeSerActivity::class.java) }
+        fileButton.setOnClickListener { goToActivity(FileActivity::class.java) }
 
     }
 

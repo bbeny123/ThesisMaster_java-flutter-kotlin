@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Android Test</string>
+    <string name="app_name">Kotlin Test</string>
     <string name="title_activity_rest">REST</string>
-    <string name="title_activity_serialization_deserialization">
+    <string name="title_activity_deser">
         Serialization &amp; Deserialization
     </string>
     <string name="title_activity_file">File</string>
