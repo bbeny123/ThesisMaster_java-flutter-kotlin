@@ -3,10 +3,22 @@ repositories {
     jcenter()
     maven { url "https://kotlin.bintray.com/kotlinx" }
 }
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-multiplatform'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.squareup.sqldelight'
+
+sqldelight {
+    TestDB {
+        packageName = 'kotlin_test'
+    }
+}
+
+configurations {
+    compileClasspath
+}
 
 android {
     compileSdkVersion 28
@@ -52,6 +64,7 @@ kotlin {
                 implementation 'io.ktor:ktor-client-android:1.2.2'
                 implementation "io.ktor:ktor-client-json-jvm:1.2.2"
                 implementation "io.ktor:ktor-client-serialization-jvm:1.2.2"
+                implementation "com.squareup.sqldelight:sqlite-driver:1.1.3"
             }
         }
     }
