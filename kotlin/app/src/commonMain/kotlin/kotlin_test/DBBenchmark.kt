@@ -1,25 +1,117 @@
 package kotlin_test
 
-object DBBenchmark
+import com.squareup.sqldelight.db.SqlDriver
+import kotlin_test.data.UserQueries
+import kotlin.random.Random
 
-object DB {
+class DBBenchmark(driver: SqlDriver) {
 
-    fun() : TestDB
+    private val userQueries: UserQueries = TestDB(driver).userQueries
+    private val tableSize = 10000
+    private val times = 1000
 
-    const val TABLE_NAME = "USERS"
-    const val COLUMN_ID = "ID"
-    const val COLUMN_LOGIN = "LOGIN"
-    const val COLUMN_EMAIL = "EMAIL"
-    const val COLUMN_NAME = "NAME"
-    const val COLUMN_AGE = "AGE"
+    fun insert(): Double {
+        var result = 0L
 
-    const val SQL_CREATE_TABLE = "CREATE TABLE $TABLE_NAME (" +
-            "$COLUMN_ID INTEGER PRIMARY KEY, " +
-            "$COLUMN_LOGIN TEXT UNIQUE, " +
-            "$COLUMN_EMAIL TEXT UNIQUE, " +
-            "$COLUMN_NAME TEXT NOT NULL, " +
-            "$COLUMN_AGE INTEGER NOT NULL CHECK ($COLUMN_AGE > 0 AND $COLUMN_AGE < 150))"
+        clearTable()
+        var user: User
+        var timer: Long
+        repeat(times) {
+            user = dummyUser(it)
+            timer = Util.getNanoTime()
+            insert(user)
+            result += Util.getNanoTime() - timer
+        }
 
-    const val SQL_DROP_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
+        return result / times.toDouble()
+    }
+
+    fun get(): Double {
+        var result = 0L
+
+        prepareData(tableSize)
+        var timer: Long
+        var dummy = 0L
+        var id: Long
+        repeat(times) {
+            id = Random.nextLong(tableSize.toLong())
+            timer = Util.getNanoTime()
+            dummy += get(id).id
+            result += Util.getNanoTime() - timer
+        }
+
+        println(dummy)
+        return result / times.toDouble()
+    }
+
+    fun getAll(): Double {
+        var result = 0L
+
+        prepareData(tableSize)
+        var timer: Long
+        var dummy = 0
+        repeat(times  / 20) {
+            timer = Util.getNanoTime()
+            dummy += findAll().size
+            result += Util.getNanoTime() - timer
+        }
+
+        println(dummy)
+        return result / (times / 20.0)
+    }
+
+    fun update(): Double {
+        var result = 0L
+
+        prepareData(tableSize)
+        var timer: Long
+        var id: Long
+        repeat(times) {
+            id = Random.nextLong(tableSize.toLong())
+            timer = Util.getNanoTime()
+            update(id, it)
+            result += Util.getNanoTime() - timer
+        }
+
+        return result / times.toDouble()
+    }
+
+    fun delete(): Double {
+        val times = 1000
+        var result = 0L
+
+        prepareData(tableSize + times)
+        var timer: Long
+        var id: Long
+        repeat(times) {
+            id = Random.nextLong(tableSize.toLong())
+            timer = Util.getNanoTime()
+            delete(id)
+            result += Util.getNanoTime() - timer
+        }
+
+        return result / times.toDouble()
+    }
+
+    private fun insert(user: User) = userQueries.insert(user.id, user.login, user.email, user.name, user.age)
+
+    private fun get(id: Long): User = userQueries.selectOne(id).executeAsOne().toUser()
+
+    private fun findAll(): List<User> = userQueries.selectAll().executeAsList().map { it.toUser() }
+
+    private fun update(id: Long, i: Int) = userQueries.updateId((id + i).toString(), id)
+
+    private fun delete(id: Long) = userQueries.delete(id)
+
+    private fun clearTable() = userQueries.clearTable()
+
+    private fun prepareData(size: Int) {
+        clearTable()
+        repeat(size) {
+            insert(dummyUser(it))
+        }
+    }
+
+    private fun dummyUser(i: Int) = User(i.toLong(), "login $i", "email $i", "name &$i", 30)
+
 }
-
