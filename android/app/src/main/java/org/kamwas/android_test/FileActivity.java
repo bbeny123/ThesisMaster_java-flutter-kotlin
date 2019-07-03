@@ -1,11 +1,8 @@
 package org.kamwas.android_test;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.TextView;
 
 import org.kamwas.android_test.helper.Utils;
 
@@ -18,6 +15,9 @@ import static java.lang.System.nanoTime;
 
 public class FileActivity extends AppCompatActivity {
 
+    private static final double times = 50;
+    private long timer = 0L;
+
     private static final int FILE_SIZE = 100;
     private static final String FILE_NAME = "test_file";
     private static final String FILE_NAME_2 = "test_file2";
@@ -29,92 +29,65 @@ public class FileActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button saveButton  = findViewById(R.id.saveButton);
-        Button readButton  = findViewById(R.id.readButton);
-        Button deleteButton  = findViewById(R.id.deleteButton);
-        TextView saveResult  = findViewById(R.id.saveResult);
-        TextView readResult  = findViewById(R.id.readResult);
-        TextView deleteResult  = findViewById(R.id.deleteResult);
-
-        saveButton.setOnClickListener(b -> {
-            Utils.start(saveResult);
-            AsyncTask.execute(() -> saveFile(saveResult));
-        });
-
-        readButton.setOnClickListener(b -> {
-            Utils.start(readResult);
-            AsyncTask.execute(() -> readFile(readResult));
-        });
-
-        deleteButton.setOnClickListener(b -> {
-            Utils.start(deleteResult);
-            AsyncTask.execute(() -> deleteFile(deleteResult));
-        });
+        Utils.benchmarkListener(findViewById(R.id.saveButton), findViewById(R.id.readButton), this::saveFile);
+        Utils.benchmarkListener(findViewById(R.id.deleteButton), findViewById(R.id.saveResult), this::readFile);
+        Utils.benchmarkListener(findViewById(R.id.readResult), findViewById(R.id.deleteResult), this::deleteFile);
     }
 
-    public void saveFile(TextView textView) {
+    public double saveFile() {
         long result = 0L;
-        long timer;
-        byte[] file = generateFile(FILE_SIZE);
 
-        for (int i = 0; i < 10; i++) {
+        generateFile(FILE_NAME_2, FILE_SIZE);
+        byte[] file = readFile(FILE_NAME_2);
+        for (int i = 0; i < times; i++) {
             timer = nanoTime();
-            saveFile(file);
+            saveFile(FILE_NAME, file);
             result += nanoTime() - timer;
-            deleteFile();
+            deleteFile(FILE_NAME);
         }
 
         Log.i("FileActivity", "Save File finished");
-        Utils.setResult(textView, result, 10);
+        deleteFile(FILE_NAME_2);
+        return result / times;
     }
 
-    public void readFile(TextView textView) {
+    public double readFile() {
         long result = 0L;
-        long timer;
-        byte[] file = generateFile(FILE_SIZE);
-        saveFile(file);
+        int dummy = 0;
 
-        for (int i = 0; i < 10; i++) {
+        generateFile(FILE_NAME, FILE_SIZE);
+        for (int i = 0; i < times; i++) {
             timer = nanoTime();
-            readFile();
+            dummy += readFile(FILE_NAME).length;
             result += nanoTime() - timer;
         }
 
-        deleteFile();
-        Log.i("FileActivity", "Read File finished");
-        Utils.setResult(textView, result, 10);
+        Log.i("FileActivity", "Read File finished " + dummy);
+        deleteFile(FILE_NAME);
+        return result / times;
     }
 
-    public void deleteFile(TextView textView) {
+    public double deleteFile() {
         long result = 0L;
-        long timer;
-        byte[] file = generateFile(FILE_SIZE);
+        boolean dummy = false;
 
-        for (int i = 0; i < 10; i++) {
-            saveFile(file);
+        generateFile(FILE_NAME_2, FILE_SIZE);
+        byte[] file = readFile(FILE_NAME_2);
+        for (int i = 0; i < times; i++) {
+            saveFile(FILE_NAME, file);
             timer = nanoTime();
-            deleteFile();
+            dummy = deleteFile(FILE_NAME);
             result += nanoTime() - timer;
         }
-        Log.i("FileActivity", "Delete File finished");
-        Utils.setResult(textView, result, 10);
+
+        Log.i("FileActivity", "Delete File finished " + dummy);
+        deleteFile(FILE_NAME_2);
+        return result / times;
     }
 
-    public byte[] generateFile(int sizeMB) {
-        byte[] data = new byte[1024 * 1024 * sizeMB];
+     public void saveFile(String name, byte[] data) {
+        File file = new File(getFilesDir(), name);
 
-        try (FileOutputStream out = new FileOutputStream(new File(getFilesDir(), FILE_NAME_2))) {
-            new SecureRandom().nextBytes(data);
-            out.write(data);
-        } catch (Exception ex) {
-            Log.d("FileActivity", "File Generation Error", ex);
-        }
-
-        return data;
-    }
-
-    public void saveFile(byte[] data) {
-        File file = new File(getFilesDir(), FILE_NAME);
         try (FileOutputStream out = new FileOutputStream(file)) {
             out.write(data);
         } catch (Exception ex) {
@@ -122,8 +95,8 @@ public class FileActivity extends AppCompatActivity {
         }
     }
 
-    public byte[] readFile() {
-        File file = new File(getFilesDir(), FILE_NAME);
+    public byte[] readFile(String name) {
+        File file = new File(getFilesDir(), name);
         byte[] data = new byte[(int) file.length()];
 
         try (FileInputStream in = new FileInputStream(file)) {
@@ -135,10 +108,19 @@ public class FileActivity extends AppCompatActivity {
         return data;
     }
 
-    public boolean deleteFile() {
-        File file = new File(getFilesDir(), FILE_NAME);
-        return file.delete();
+    public boolean deleteFile(String name) {
+        return new File(getFilesDir(), name).delete();
     }
 
+    public void generateFile(String name, int sizeMB) {
+        byte[] data = new byte[1024 * 1024 * sizeMB];
+        new SecureRandom().nextBytes(data);
+
+        try (FileOutputStream out = new FileOutputStream(new File(getFilesDir(), name))) {
+            out.write(data);
+        } catch (Exception ex) {
+            Log.d("FileActivity", "File Generation Error", ex);
+        }
+    }
 
 }

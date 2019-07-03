@@ -1,15 +1,8 @@
 package org.kamwas.android_test;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import org.kamwas.android_test.helper.TestObject;
 import org.kamwas.android_test.helper.Utils;
@@ -26,6 +19,11 @@ import static java.util.stream.IntStream.range;
 
 public class CollectionActivity extends AppCompatActivity {
 
+    private static final double times = 10000;
+    private static final double timesShort = 100;
+    private static final int listSize = 10000;
+    private long timer = 0L;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,177 +31,144 @@ public class CollectionActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button addButton  = findViewById(R.id.addButton);
-        Button readAllButton  = findViewById(R.id.readAllButton);
-        Button readRandomButton  = findViewById(R.id.readRandomButton);
-        Button removeButton  = findViewById(R.id.removeRandomButton);
-        Button filterButton  = findViewById(R.id.filterButton);
-        Button sortButton  = findViewById(R.id.sortButton);
-        TextView addResult  = findViewById(R.id.addResult);
-        TextView readAllResult  = findViewById(R.id.readAllResult);
-        TextView readRandomResult  = findViewById(R.id.readRandomResult);
-        TextView removeResult  = findViewById(R.id.removeRandomResult);
-        TextView filterResult  = findViewById(R.id.filterResult);
-        TextView sortResult  = findViewById(R.id.sortResult);
-
-        addButton.setOnClickListener(b -> {
-            Utils.start(addResult);
-            AsyncTask.execute(() -> add(addResult));
-        });
-
-        readAllButton.setOnClickListener(b -> {
-            Utils.start(readAllResult);
-            AsyncTask.execute(() -> readAll(readAllResult));
-        });
-
-        readRandomButton.setOnClickListener(b -> {
-            Utils.start(readRandomResult);
-            AsyncTask.execute(() -> readRandom(readRandomResult));
-        });
-
-        removeButton.setOnClickListener(b -> {
-            Utils.start(removeResult);
-            AsyncTask.execute(() -> removeRandom(removeResult));
-        });
-
-        filterButton.setOnClickListener(b -> {
-            Utils.start(filterResult);
-            AsyncTask.execute(() -> filter(filterResult));
-        });
-
-        sortButton.setOnClickListener(b -> {
-            Utils.start(sortResult);
-            AsyncTask.execute(() -> sort(sortResult));
-        });
+        Utils.benchmarkListener(findViewById(R.id.addButton), findViewById(R.id.addResult), this::add10k);
+        Utils.benchmarkListener(findViewById(R.id.readAllButton), findViewById(R.id.readAllResult), this::readAll);
+        Utils.benchmarkListener(findViewById(R.id.readRandomButton), findViewById(R.id.readRandomResult), this::read10PercentRandom);
+        Utils.benchmarkListener(findViewById(R.id.removeRandomButton), findViewById(R.id.removeRandomResult), this::remove10PercentRandom);
+        Utils.benchmarkListener(findViewById(R.id.filterButton), findViewById(R.id.filterResult), this::filter);
+        Utils.benchmarkListener(findViewById(R.id.sortButton), findViewById(R.id.sortResult), this::sort);
     }
 
-    public void add(TextView textView) {
+    public double add10k() {
+        timer = nanoTime();
+        add((int) times);
+        timer = nanoTime() - timer;
+
         Log.i("CollectionActivity", "Collection Add One Benchmark finished");
-        Utils.setResult(textView, add10kObjects(), 10000);
+        return timer / times;
     }
 
-    public void readAll(TextView textView) {
+    public double readAll() {
+        List<TestObject> list = generateList((int) times);
+        int dummy;
+
+        timer = nanoTime();
+        dummy = read(list);
+        timer = nanoTime() - timer;
+
+        Log.i("CollectionActivity", "Collection Read All Benchmark finished " + dummy);
+        return timer / times;
+    }
+
+    public double read10PercentRandom() {
+        List<TestObject> list = generateList(listSize);
+        List<Integer> toRead = generateRandomIndexes((int) times, (int) times * 10, false);
+        int dummy;
+
+        timer = nanoTime();
+        dummy = readRandom(list, toRead);
+        timer = nanoTime() - timer;
+
+        Log.i("CollectionActivity", "Collection Read Random Benchmark finished " + dummy);
+        return timer / times;
+    }
+
+    public double remove10PercentRandom() {
+        List<TestObject> list = generateList(listSize);
+        List<Integer> toRemove = generateRandomIndexes((int) times, (int) times * 10, true);
+
+        timer = nanoTime();
+        removeRandom(list, toRemove);
+        timer = nanoTime() - timer;
+
+        Log.i("CollectionActivity", "Collection 10% Benchmark finished");
+        return timer / times;
+    }
+
+    public double filter() {
         long result = 0L;
 
-        for (int i = 0; i < 100; i++) {
-            result += read10k();
-        }
-
-        Log.i("CollectionActivity", "Collection Read All Benchmark finished");
-        Utils.setResult(textView, result, 100);
-    }
-
-    public void readRandom(TextView textView) {
-        Log.i("CollectionActivity", "Collection Read Random Benchmark finished");
-        Utils.setResult(textView, read1kRandom(), 1000);
-    }
-
-    public void removeRandom(TextView textView) {
-        Log.i("CollectionActivity", "Collection Remove Random Benchmark finished");
-        Utils.setResult(textView, remove1kRandom(), 1000);
-    }
-
-    public void filter(TextView textView) {
-        long result = 0L;
-
-        for (int i = 0; i < 100; i++) {
-            result += filter();
+        int minIndex = listSize / 2;
+        List<TestObject> list;
+        for (int i = 0; i < timesShort; i++) {
+            list = generateList(listSize);
+            timer = nanoTime();
+            filter(list, minIndex);
+            result += nanoTime() - timer;
         }
 
         Log.i("CollectionActivity", "Collection Filter Benchmark finished");
-        Utils.setResult(textView, result, 100);
+        return result / times;
     }
 
-    public void sort(TextView textView) {
+    public double sort() {
         long result = 0L;
 
-        for (int i = 0; i < 100; i++) {
-            result += sort();
+        List<TestObject> list = generateList(listSize);
+        for (int i = 0; i < timesShort; i++) {
+            Collections.shuffle(list);
+            timer = nanoTime();
+            sort(list);
+            result += nanoTime() - timer;
         }
 
         Log.i("CollectionActivity", "Collection Sort Benchmark finished");
-        Utils.setResult(textView, result, 100);
+        return result / times;
     }
 
-    public long add10kObjects() {
-        long timer = nanoTime();
-
+    public int add(int times) {
         List<TestObject> list = new ArrayList<>();
-        range(0, 10000).forEach(i -> list.add(new TestObject(i, "item" + i)));
-        timer = nanoTime() - timer;
-
-        Log.d(getClass().getSimpleName(), "add10kObjects: " + timer + ", size: " + list.size());
-        return timer;
+        for (int i = 0; i < times; i++) {
+            list.add(new TestObject(i, "item" + i));
+        }
+        return list.size();
     }
 
-    public long read10k() {
-        List<TestObject> list = range(0, 10000).boxed().map(i -> new TestObject(i, "item" + i)).collect(toList());
+    public int read(List<TestObject> list) {
         int dummy = 0;
-
-        long timer = nanoTime();
         for (TestObject item : list) {
             dummy += item.getIndex();
         }
-
-        timer = nanoTime() - timer;
-
-//        Log.d(getClass().getSimpleName(), "read10kObjects: " + timer + ", dummy: " + dummy);
-        return timer;
+        return dummy;
     }
 
-    public long read1kRandom() {
-        List<TestObject> list = range(0, 10000).boxed().map(i -> new TestObject(i, "item" + i)).collect(toList());
-        List<Integer> toRead = range(0, 1000).map(i -> new Random().nextInt(10000)).boxed().collect(toList());
+    public int readRandom(List<TestObject> list, List<Integer> toRead) {
         int dummy = 0;
-
-        long timer = nanoTime();
         for (Integer i : toRead) {
             dummy += list.get(i).getIndex();
         }
-
-        timer = nanoTime() - timer;
-
-        Log.d(getClass().getSimpleName(), "read1kObjectsRandom: " + timer + ", dummy: " + dummy);
-        return timer;
+        return dummy;
     }
 
-    public long remove1kRandom() {
-        List<TestObject> list = range(0, 10000).boxed().map(i -> new TestObject(i, "item" + i)).collect(toList());
-        List<Integer> toRemove = range(0, 1000).map(i -> new Random().nextInt(10000 - i)).boxed().collect(toList());
-
-        long timer = nanoTime();
+    public int removeRandom(List<TestObject> list, List<Integer> toRemove) {
         for (Integer i : toRemove) {
             list.remove((int) i);
         }
-
-        timer = nanoTime() - timer;
-
-        Log.d(getClass().getSimpleName(), "read1kObjectsRandom: " + timer + ", size: " + list.size());
-        return timer;
+        return list.size();
     }
 
-    public long filter() {
-        List<TestObject> list = range(0, 10000).boxed().map(i -> new TestObject(i, "item" + i)).collect(toList());
-        Collections.shuffle(list);
-
-        long timer = nanoTime();
-        list = list.stream().filter(i -> i.getIndex() > 5000).collect(toList());
-        timer = nanoTime() - timer;
-
-//        Log.d(getClass().getSimpleName(), "read1kObjectsRandom: " + timer + ", size: " + list.size());
-        return timer;
+    public int filter(List<TestObject> list, int minIndex) {
+        list.removeIf(i -> i.getIndex() > minIndex);
+        return list.size();
     }
 
-    public long sort() {
-        List<TestObject> list = range(0, 10000).boxed().map(i -> new TestObject(i, "item" + i)).collect(toList());
-        Collections.shuffle(list);
+    public int sort(List<TestObject> list) {
+        list.sort(comparing(TestObject::getIndex));
+        return list.get(list.size() - 1).getIndex();
+    }
 
-        long timer = nanoTime();
-        list = list.stream().sorted(comparing(TestObject::getIndex)).collect(toList());
-        timer = nanoTime() - timer;
+    private List<TestObject> generateList(int size) {
+        return range(0, size)
+                .boxed()
+                .map(i -> new TestObject(i, "item" + i))
+                .collect(toList());
+    }
 
-//        Log.d(getClass().getSimpleName(), "read1kObjectsRandom: " + timer + ", lastItem: " + list.get(list.size() - 1).getIndex());
-        return timer;
+    private List<Integer> generateRandomIndexes(int size, int maxIndex, boolean reduce) {
+        return range(0, size)
+                .map(i -> new Random().nextInt(maxIndex - (reduce ? i : 0)))
+                .boxed()
+                .collect(toList());
     }
 
 }

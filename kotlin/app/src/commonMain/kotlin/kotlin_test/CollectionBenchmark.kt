@@ -17,7 +17,7 @@ object CollectionBenchmark {
         return timer / times.toDouble()
     }
 
-    fun read10k(): Double {
+    fun readAll(): Double {
         val list = generateList(times)
         val dummy: Int
 
@@ -115,7 +115,7 @@ object CollectionBenchmark {
 
     private fun filter(list: ArrayList<TestObject>, minIndex: Int): Int {
         list.filter { it.index > minIndex }
-        return list.last().index
+        return list.size
     }
 
     private fun sort(list: ArrayList<TestObject>): Int {

@@ -13,7 +13,7 @@ class CollectionActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         addButton.setOnClickListener { Util.benchmark(addResult) { CollectionBenchmark.add10k() } }
-        readAllButton.setOnClickListener { Util.benchmark(readAllResult) { CollectionBenchmark.read10k() } }
+        readAllButton.setOnClickListener { Util.benchmark(readAllResult) { CollectionBenchmark.readAll() } }
         readRandomButton.setOnClickListener { Util.benchmark(readRandomResult) { CollectionBenchmark.read10PercentRandom() } }
         removeRandomButton.setOnClickListener { Util.benchmark(removeRandomResult) { CollectionBenchmark.remove10PercentRandom() } }
         filterButton.setOnClickListener { Util.benchmark(filterResult) { CollectionBenchmark.filter() } }
