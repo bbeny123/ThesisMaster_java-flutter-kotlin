@@ -5,21 +5,24 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.TextView;
 
+import org.kamwas.android_test.helper.User;
 import org.kamwas.android_test.helper.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static java.lang.System.nanoTime;
 
 public class DBActivity extends AppCompatActivity {
 
+    private static final double times = 1000;
+    private static final int tableSize = 10000;
+    private long timer = 0L;
     private DBPerformance db;
 
     @Override
@@ -29,126 +32,98 @@ public class DBActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button addOneButton  = findViewById(R.id.addOneButton);
-        Button getOneButton  = findViewById(R.id.getOneButton);
-        Button getAllButton  = findViewById(R.id.getAllButton);
-        Button updateOneButton  = findViewById(R.id.updateOneButton);
-        Button deleteOneButton  = findViewById(R.id.deleteOneButton);
-        TextView addOneResult  = findViewById(R.id.addOneResult);
-        TextView getOneResult  = findViewById(R.id.getOneResult);
-        TextView getAllResult  = findViewById(R.id.getAllResult);
-        TextView updateOneResult  = findViewById(R.id.updateOneResult);
-        TextView deleteOneResult  = findViewById(R.id.deleteOneResult);
-
-        addOneButton.setOnClickListener(b -> {
-            Utils.start(addOneResult);
-            AsyncTask.execute(() -> addOne(addOneResult));
-        });
-
-        getOneButton.setOnClickListener(b -> {
-            Utils.start(getOneResult);
-            AsyncTask.execute(() -> getOne(getOneResult));
-        });
-
-        getAllButton.setOnClickListener(b -> {
-            Utils.start(getAllResult);
-            AsyncTask.execute(() -> getAll(getAllResult));
-        });
-
-        updateOneButton.setOnClickListener(b -> {
-            Utils.start(updateOneResult);
-            AsyncTask.execute(() -> updateOne(updateOneResult));
-        });
-
-        deleteOneButton.setOnClickListener(b -> {
-            Utils.start(deleteOneResult);
-            AsyncTask.execute(() -> deleteOne(deleteOneResult));
-        });
-
         db = new DBPerformance(getApplicationContext());
+
+        Utils.benchmarkListener(findViewById(R.id.addOneButton), findViewById(R.id.addOneResult), this::insert);
+        Utils.benchmarkListener(findViewById(R.id.getOneButton), findViewById(R.id.getOneResult), this::get);
+        Utils.benchmarkListener(findViewById(R.id.getAllButton), findViewById(R.id.getAllResult), this::getAll);
+        Utils.benchmarkListener(findViewById(R.id.updateOneButton), findViewById(R.id.updateOneResult), this::update);
+        Utils.benchmarkListener(findViewById(R.id.deleteOneButton), findViewById(R.id.deleteOneResult), this::delete);
     }
 
-    public void addOne(TextView textView) {
+    public double insert() {
         long result = 0L;
-        long timer;
 
-        db.recreateTable();
-        for (int i = 0; i < 10; i++) {
+        db.clearTable();
+        User user;
+        for (int i = 0; i < times; i++) {
+            user = db.dummyUser(i);
             timer = nanoTime();
-            db.addOne(i, "login " + i, "email " + i, "name " + i, 30);
+            db.insert(user);
             result += nanoTime() - timer;
         }
 
         Log.i("DBActivity", "DB Add One Benchmark finished");
-        Utils.setResult(textView, result, 10);
+        return result / times;
     }
 
-    public void getOne(TextView textView) {
+    public double get() {
         long result = 0L;
-        long timer;
 
-        db.recreateTableWithData();
-        for (int i = 0; i < 1000; i++) {
-            int j = new Random().nextInt(1000);
+        db.prepareData(tableSize);
+        long dummy = 0;
+        int id;
+        for (int i = 0; i < times; i++) {
+            id = new Random().nextInt(tableSize);
             timer = nanoTime();
-            db.getOne(j);
+            dummy += db.get(id).getId();
             result += nanoTime() - timer;
         }
 
-        Log.i("DBActivity", "DB Read One Benchmark finished");
-        Utils.setResult(textView, result, 1000);
+        Log.i("DBActivity", "DB Read One Benchmark finished " + dummy);
+        return result / times;
     }
 
-    public void getAll(TextView textView) {
+    public double getAll() {
         long result = 0L;
-        long timer;
 
-        db.recreateTableWithData();
-        for (int i = 0; i < 1000; i++) {
+        db.prepareData(tableSize);
+        int dummy = 0;
+        for (int i = 0; i < times / 20; i++) {
             timer = nanoTime();
-            db.getAll().getCount();
+            dummy += db.findAll().size();
             result += nanoTime() - timer;
         }
 
-        Log.i("DBActivity", "DB Read All Benchmark finished");
-        Utils.setResult(textView, result, 1000);
+        Log.i("DBActivity", "DB Read All Benchmark finished " + dummy);
+        return result / (times / 20);
     }
 
-    public void updateOne(TextView textView) {
+    public double update() {
         long result = 0L;
-        long timer;
 
-        db.recreateTableWithData();
-        for (int i = 0; i < 1000; i++) {
-            int j = new Random().nextInt(1000);
+        db.prepareData(tableSize);
+        int id;
+        for (int i = 0; i < times; i++) {
+            id = new Random().nextInt(tableSize);
             timer = nanoTime();
-            db.updateOne(j, i);
+            db.update(id, i);
             result += nanoTime() - timer;
         }
 
         Log.i("DBActivity", "DB Update One Benchmark finished");
-        Utils.setResult(textView, result, 1000);
+        return result / times;
     }
 
-    public void deleteOne(TextView textView) {
+    public double delete() {
         long result = 0L;
-        long timer;
 
-        for (int i = 0; i < 10; i++) {
-            db.recreateTableWithData();
-            int j = new Random().nextInt(1000);
+        db.prepareData(tableSize + (int) times);
+        int id;
+        for (int i = 0; i < times; i++) {
+            id = new Random().nextInt(tableSize);
             timer = nanoTime();
-            db.deleteOne(j);
+            db.delete(id);
             result += nanoTime() - timer;
         }
 
         Log.i("DBActivity", "DB Delete One Benchmark finished");
-        Utils.setResult(textView, result, 10);
+        return result / times;
     }
 
-    public class DBPerformance extends SQLiteOpenHelper {
-        public DBPerformance(Context context) {
-            super(context, "DATABASE", null, 1);
+    private class DBPerformance extends SQLiteOpenHelper {
+        DBPerformance(Context context) {
+            super(context, "DB_TEST", null, 1);
         }
 
         @Override
@@ -160,51 +135,66 @@ public class DBActivity extends AppCompatActivity {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
 
-        public void recreateTable() {
-            this.getWritableDatabase().execSQL(DB.SQL_DROP_TABLE);
-            this.getWritableDatabase().execSQL(DB.SQL_CREATE_TABLE);
-        }
-
-        public void recreateTableWithData() {
-            this.recreateTable();
-            for (int i = 0; i < 1000; i++) {
-                db.addOne(i, "login " + i, "email " + i, "name " + i, 30);
-            }
-        }
-
-        public void addOne(int id, String login, String email, String name, int age) {
+        private void insert(User user) {
             ContentValues values = new ContentValues();
-            values.put(DB.COLUMN_ID, id);
-            values.put(DB.COLUMN_LOGIN, login);
-            values.put(DB.COLUMN_EMAIL, email);
-            values.put(DB.COLUMN_NAME, name);
-            values.put(DB.COLUMN_AGE, age);
+            values.put(DB.COLUMN_ID, user.getId());
+            values.put(DB.COLUMN_LOGIN, user.getLogin());
+            values.put(DB.COLUMN_EMAIL, user.getEmail());
+            values.put(DB.COLUMN_NAME, user.getName());
+            values.put(DB.COLUMN_AGE, user.getAge());
             this.getWritableDatabase().insert(DB.TABLE_NAME, null, values);
         }
 
-        public Cursor getOne(int id) {
+        private User get(long id) {
             String[] args = { id + "" };
-            return getReadableDatabase().query(DB.TABLE_NAME, null, DB.COLUMN_ID + " = ?", args, null, null, null);
+            List<User> result = mapCursor(getReadableDatabase().query(DB.TABLE_NAME, null, DB.COLUMN_ID + " = ?", args, null, null, null));
+            return !result.isEmpty() ? result.get(0) : null;
         }
 
-        public Cursor getAll() {
-            return getReadableDatabase().query(DB.TABLE_NAME, null, null, null, null, null, null);
+        private List<User> findAll() {
+            return mapCursor(getReadableDatabase().query(DB.TABLE_NAME, null, null, null, null, null, null));
         }
 
-        public void updateOne(int id, int i) {
+        private void update(long id, int i) {
             ContentValues values = new ContentValues();
             values.put(DB.COLUMN_NAME, id + i);
             String[] args = { id + "" };
             getWritableDatabase().update(DB.TABLE_NAME, values, DB.COLUMN_ID + " = ?", args);
         }
 
-        public void deleteOne(int id) {
+        private void delete(long id) {
             String[] args = { id + "" };
             getWritableDatabase().delete(DB.TABLE_NAME, DB.COLUMN_ID + " = ?", args);
         }
+
+        private void clearTable() {
+            this.getWritableDatabase().execSQL(DB.SQL_CLEAR_TABLE);
+        }
+
+        private void prepareData(int size) {
+            this.clearTable();
+            for (int i = 0; i < size; i++) {
+                insert(dummyUser(i));
+            }
+        }
+
+        private User dummyUser(int i) {
+            return new User((long) i, "login " + i, "email " + i, "name " + i, 30);
+        }
+
+        private List<User> mapCursor(Cursor cursor) {
+            List<User> users = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+                do {
+                    users.add(new User(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(5)));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            return users;
+        }
     }
 
-    public interface DB {
+    private interface DB {
         String TABLE_NAME = "USERS";
         String COLUMN_ID = "ID";
         String COLUMN_LOGIN = "LOGIN";
@@ -220,7 +210,7 @@ public class DBActivity extends AppCompatActivity {
                         COLUMN_NAME + " TEXT NOT NULL, " +
                         COLUMN_AGE + " INTEGER NOT NULL CHECK (" + COLUMN_AGE + " > 0 AND " + COLUMN_AGE + " < 150))";
 
-        String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        String SQL_CLEAR_TABLE = "DELETE FROM " + TABLE_NAME;
     }
 
 }
