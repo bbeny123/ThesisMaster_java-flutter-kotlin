@@ -1,74 +1,73 @@
 import 'dart:io';
+
 import 'package:path_provider/path_provider.dart';
 
 class FileBenchmark {
 
+  static const int _times = 50;
+  int _timer = 0;
+  
+  static const String FILE_NAME = "test_file";
+  static const String FILE_NAME2 = "test_file2";
+  static const String FILE_GENERATED = "test_file_generated";
   String _path;
 
   FileBenchmark() {
-    setPath();
+    getApplicationDocumentsDirectory().then((p) => _path = p.path);
   }
 
-  void setPath() async {
-    _path = (await getApplicationDocumentsDirectory()).path;
-  }
-
-  Future<double> saveFileTest() async {
+  Future<double> saveFile() async {
     int result = 0;
-    int timer;
-    List<int> file = readFile();
 
-    for (int i = 0; i < 10; i++) {
-      timer = DateTime.now().microsecondsSinceEpoch;
-      saveFile(file);
-      result += DateTime.now().microsecondsSinceEpoch - timer;
-      deleteFile();
+    List<int> file = _readFile(FILE_GENERATED);
+    for (int i = 0; i < _times; i++) {
+      _timer = DateTime.now().microsecondsSinceEpoch;
+      _saveFile(FILE_NAME, file);
+      result += DateTime.now().microsecondsSinceEpoch - _timer;
+      _deleteFile(FILE_NAME);
     }
 
-    return result / 10;
+    return result / _times;
   }
 
-  Future<double> readFileTest() async {
+  Future<double> readFile() async {
     int result = 0;
-    int timer;
+    int dummy = 0;
 
-    for (int i = 0; i < 10; i++) {
-      timer = DateTime.now().microsecondsSinceEpoch;
-      readFile();
-      result += DateTime.now().microsecondsSinceEpoch - timer;
+    for (int i = 0; i < _times; i++) {
+      _timer = DateTime.now().microsecondsSinceEpoch;
+      dummy += _readFile(FILE_GENERATED).length;
+      result += DateTime.now().microsecondsSinceEpoch - _timer;
     }
 
-    return result / 10;
+    print(dummy);
+    return result / _times;
   }
 
-  Future<double> deleteFileTest() async {
+  Future<double> deleteFile() async {
     int result = 0;
-    int timer;
-    List<int> file = readFile();
 
-    for (int i = 0; i < 10; i++) {
-      saveFile(file);
-      timer = DateTime.now().microsecondsSinceEpoch;
-      deleteFile();
-      result += DateTime.now().microsecondsSinceEpoch - timer;
+    List<int> file = _readFile(FILE_GENERATED);
+    for (int i = 0; i < _times; i++) {
+      _saveFile(FILE_NAME, file);
+      _timer = DateTime.now().microsecondsSinceEpoch;
+      _deleteFile(FILE_NAME);
+      result += DateTime.now().microsecondsSinceEpoch - _timer;
     }
 
-    return result / 10;
+    return result / _times;
   }
 
-  void saveFile(List<int> data) async {
-    File file = File('$_path/test_file');
-    file.writeAsBytesSync(data);
+  void _saveFile(String name, List<int> data) {
+    return File('$_path/$name').writeAsBytesSync(data);
   }
 
-  List<int> readFile() {
-    File file = File('$_path/test_file2');
-    return file.readAsBytesSync();
+  List<int> _readFile(String name) {
+    return File('$_path/$name').readAsBytesSync();
   }
 
-  void deleteFile() {
-    File file = File('$_path/test_file');
-    return file.deleteSync();
+  void _deleteFile(String name) {
+    return File('$_path/$name').deleteSync();
   }
 
 }

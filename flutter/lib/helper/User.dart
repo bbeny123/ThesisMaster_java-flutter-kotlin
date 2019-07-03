@@ -10,7 +10,7 @@ class User {
   String name;
   int age;
 
-  User.name();
+  User.empty();
 
   User(this.id, this.login, this.email, this.name, this.age);
 

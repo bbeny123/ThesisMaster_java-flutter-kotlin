@@ -1,10 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-import 'CollectionsBenchmark.dart';
+import 'CollectionBenchmark.dart';
 import 'DBBenchmark.dart';
-import 'DeserBenchmark.dart';
+import 'DeSerBenchmark.dart';
 import 'FileBenchmark.dart';
 import 'RESTBenchmark.dart';
 
@@ -23,13 +21,13 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _menu(context, 'COLLECTIONS', Collections()),
+              _menu(context, 'COLLECTIONS', Collection()),
               Padding(padding: EdgeInsets.all(8.0)),
               _menu(context, 'REST', REST()),
               Padding(padding: EdgeInsets.all(8.0)),
               _menu(context, 'DB', DB()),
               Padding(padding: EdgeInsets.all(8.0)),
-              _menu(context, 'SERIALIZATION\nDESERIALIZATION', Deser()),
+              _menu(context, 'SERIALIZATION\nDESERIALIZATION', DeSer()),
               Padding(padding: EdgeInsets.all(8.0)),
               _menu(context, 'FILE', File())
             ],
@@ -39,36 +37,30 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Collections extends StatelessWidget {
-  var benchmark = new CollectionsBenchmark();
-  var addOne = new TextEditingController(text: NO_DATA);
-  var readAll = new TextEditingController(text: NO_DATA);
-  var readRandom = new TextEditingController(text: NO_DATA);
-  var removeOne = new TextEditingController(text: NO_DATA);
-  var filter = new TextEditingController(text: NO_DATA);
-  var sort = new TextEditingController(text: NO_DATA);
+class Collection extends StatelessWidget {
+  final benchmark = CollectionBenchmark();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Collections"),
+          title: Text("Collection"),
         ),
         body: Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _row(addOne, 'ADD ONE', () => benchmark.add10kObjects()),
+                _row('ADD ONE', () => benchmark.add10k()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(readAll, 'READ ALL', () => benchmark.readAll()),
+                _row('READ ALL', () => benchmark.readAll()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(readRandom, 'READ RANDOM', () => benchmark.read1kRandom()),
+                _row('READ RANDOM', () => benchmark.read10PercentRandom()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(removeOne, 'REMOVE ONE', () => benchmark.remove1kRandom()),
+                _row('REMOVE RANDOM', () => benchmark.remove10PercentRandom()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(filter, 'FILTER', () => benchmark.filter()),
+                _row('FILTER', () => benchmark.filter()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(sort, 'SORT', () => benchmark.sort())
+                _row('SORT', () => benchmark.sort())
               ]
           ),
         )
@@ -77,9 +69,7 @@ class Collections extends StatelessWidget {
 }
 
 class REST extends StatelessWidget {
-  var benchmark = new RESTBenchmark();
-  var get = new TextEditingController(text: NO_DATA);
-  var post = new TextEditingController(text: NO_DATA);
+  final benchmark = RESTBenchmark();
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +81,9 @@ class REST extends StatelessWidget {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _row(get, 'GET', () => benchmark.get()),
+                  _row('GET', () => benchmark.get()),
                   Padding(padding: EdgeInsets.all(8.0)),
-                  _row(post, 'POST', () => benchmark.post())
+                  _row('POST', () => benchmark.post())
                 ]
             )
         )
@@ -102,13 +92,7 @@ class REST extends StatelessWidget {
 }
 
 class DB extends StatelessWidget {
-  var benchmark = new DBBenchmark();
-  var addOne = new TextEditingController(text: NO_DATA);
-  var getOne = new TextEditingController(text: NO_DATA);
-  var getAll = new TextEditingController(text: NO_DATA);
-  var updateOne = new TextEditingController(text: NO_DATA);
-  var deleteOne = new TextEditingController(text: NO_DATA);
-
+  final benchmark = DBBenchmark();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,15 +103,15 @@ class DB extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _row(addOne, 'ADD ONE', () => benchmark.addOneResult()),
+                _row('INSERT', () => benchmark.insert()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(getOne, 'GET ONE', () => benchmark.getOneResult()),
+                _row('GET ONE', () => benchmark.get()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(getAll, 'GET ALL', () => benchmark.getAllResult()),
+                _row('GET ALL', () => benchmark.getAll()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(updateOne, 'UPDATE ONE', () => benchmark.updateOneResult()),
+                _row('UPDATE ONE', () => benchmark.update()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(deleteOne, 'DELETE ONE', () => benchmark.deleteOneResult())
+                _row('DELETE ONE', () => benchmark.delete())
               ]
           ),
         )
@@ -135,10 +119,8 @@ class DB extends StatelessWidget {
   }
 }
 
-class Deser extends StatelessWidget {
-  var benchmark = new DeserBenchmark();
-  var serialization = new TextEditingController(text: NO_DATA);
-  var deserialization = new TextEditingController(text: NO_DATA);
+class DeSer extends StatelessWidget {
+  final benchmark = DeSerBenchmark();
 
   @override
   Widget build(BuildContext context) {
@@ -150,9 +132,9 @@ class Deser extends StatelessWidget {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _row(serialization, 'SERIALIZATION', () => benchmark.serialize()),
+                  _row('SERIALIZATION', () => benchmark.serialize()),
                   Padding(padding: EdgeInsets.all(8.0)),
-                  _row(deserialization, 'DESERIALIZATION', () => benchmark.deserialize())
+                  _row('DESERIALIZATION', () => benchmark.deserialize())
                 ]
             )
         )
@@ -161,10 +143,7 @@ class Deser extends StatelessWidget {
 }
 
 class File extends StatelessWidget {
-  var benchmark = new FileBenchmark();
-  var save = new TextEditingController(text: NO_DATA);
-  var read = new TextEditingController(text: NO_DATA);
-  var delete = new TextEditingController(text: NO_DATA);
+  final benchmark = FileBenchmark();
 
   @override
   Widget build(BuildContext context) {
@@ -176,11 +155,11 @@ class File extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _row(save, 'SAVE', () => benchmark.saveFileTest()),
+                _row('SAVE', () => benchmark.saveFile()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(read, 'READ', () => benchmark.readFileTest()),
+                _row('READ', () => benchmark.readFile()),
                 Padding(padding: EdgeInsets.all(8.0)),
-                _row(delete, 'DELETE', () => benchmark.deleteFileTest())
+                _row('DELETE', () => benchmark.deleteFile())
               ]
           ),
         )
@@ -188,7 +167,8 @@ class File extends StatelessWidget {
   }
 }
 
-Row _row(TextEditingController text, String btnText, Future<double> Function() method) {
+Row _row(String btnText, Future<double> Function() method) {
+  final text = TextEditingController(text: 'NO DATA');
   return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -196,7 +176,7 @@ Row _row(TextEditingController text, String btnText, Future<double> Function() m
             minWidth: 160,
             height: 40,
             buttonColor: Colors.white30,
-            child: RaisedButton(child: Text(btnText, textAlign: TextAlign.center), onPressed: () async => _benchmark(text, method))),
+            child: RaisedButton(child: Text(btnText, textAlign: TextAlign.center), onPressed: () => _benchmark(text, method))),
         Padding(padding: EdgeInsets.all(8.0)),
         Container(
             width: 160,
@@ -218,8 +198,6 @@ ButtonTheme _menu(BuildContext ctx, String text, Widget widget) {
 }
 
 void _benchmark(TextEditingController text, Future<double> Function() method) async {
-  text.text = 'TESTING';
-  double result = await method();
-  double mod = pow(10.0, 3);
-  text.text = (((result / 1000) * mod).round().toDouble() / mod).toString() + ' ms';
+  text.text = 'Benchmarking';
+  text.text = (await method() / 1000).toStringAsFixed(3) + ' ms';
 }

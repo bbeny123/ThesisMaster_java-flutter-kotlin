@@ -1,44 +1,65 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+
 import 'helper/User.dart';
 
 class RESTBenchmark {
 
+  static const int _times = 500;
+  int _timer = 0;
+
+  static const String _url = 'http://10.0.2.2:8080';
+
   Future<double> get() async {
     int result = 0;
-    int timer = 0;
-    User user;
-    for (int i = 0; i < 1000; i++) {
-      timer = DateTime.now().microsecondsSinceEpoch;
-      Response response = await http.get('http://10.0.2.2:8080');
-      if (response.statusCode == 200) {
-        user = User.fromJson(jsonDecode(response.body));
-      } else {
-        print('GET ERROR');
-      }
-      result += DateTime.now().microsecondsSinceEpoch - timer;
+    int dummy = 0;
+
+    for (int i = 0; i < _times; i++) {
+      _timer = DateTime.now().microsecondsSinceEpoch;
+      dummy += (await _getCall()).id;
+      result += DateTime.now().microsecondsSinceEpoch - _timer;
     }
-    print(jsonEncode(user));
-    return result / 1000;
+
+    print(dummy);
+    return result / _times;
   }
 
   Future<double> post() async {
-    User user = new User(1, 'user', 'user@user', 'user', 30);
     int result = 0;
-    int timer = 0;
 
-    for (int i = 0; i < 1000; i++) {
-      timer = DateTime.now().microsecondsSinceEpoch;
-      Response response = await http.post('http://10.0.2.2:8080',
-          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-          body: jsonEncode(user));
-      if (response.statusCode != 200) {
-        print('GET ERROR');
-      }
-      result += DateTime.now().microsecondsSinceEpoch - timer;
+    final User user = User(1, 'user', 'user@user', 'user', 30);
+    for (int i = 0; i < _times; i++) {
+      _timer = DateTime.now().microsecondsSinceEpoch;
+      await _postCall(user);
+      result += DateTime.now().microsecondsSinceEpoch - _timer;
     }
-    return result / 1000;
+
+    return result / _times;
   }
+
+  Future<User> _getCall() async {
+    User user;
+
+    Response response = await http.get(_url);
+    if (response.statusCode == HttpStatus.ok) {
+      user = User.fromJson(jsonDecode(response.body));
+    } else {
+      print('GET ERROR');
+    }
+
+    return user;
+  }
+
+  Future<void> _postCall(User user) async {
+    Response response = await http.post(_url,
+        headers: {HttpHeaders.contentTypeHeader: ContentType.json.value},
+        body: jsonEncode(user));
+    if (response.statusCode != HttpStatus.ok) {
+      print('POST ERROR');
+    }
+  }
+
 }

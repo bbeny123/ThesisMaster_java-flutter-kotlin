@@ -173,9 +173,13 @@ public class DBActivity extends AppCompatActivity {
 
         private void prepareData(int size) {
             this.clearTable();
+
+            db.getWritableDatabase().beginTransaction();
             for (int i = 0; i < size; i++) {
                 insert(dummyUser(i));
             }
+            db.getWritableDatabase().setTransactionSuccessful();
+            db.getWritableDatabase().endTransaction();
         }
 
         private User dummyUser(int i) {

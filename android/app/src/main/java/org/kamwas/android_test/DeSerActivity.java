@@ -51,7 +51,7 @@ public class DeSerActivity extends AppCompatActivity {
         String json = serialize(user);
         for (int i = 0; i < times; i++) {
             timer = nanoTime();
-            dummy = deserialize(json).getId();
+            dummy += deserialize(json).getId();
             result += nanoTime() - timer;
         }
 
