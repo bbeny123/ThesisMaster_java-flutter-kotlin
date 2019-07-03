@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'helper/TestObject.dart';
 
 class CollectionBenchmark {
