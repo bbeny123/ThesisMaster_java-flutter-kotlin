@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import org.kamwas.android_test.helper.Utils;
+import org.kamwas.android_test.helper.Util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,9 +29,9 @@ public class FileActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Utils.benchmarkListener(findViewById(R.id.saveButton), findViewById(R.id.saveResult), this::saveFile);
-        Utils.benchmarkListener(findViewById(R.id.readButton), findViewById(R.id.readResult), this::readFile);
-        Utils.benchmarkListener(findViewById(R.id.deleteButton), findViewById(R.id.deleteResult), this::deleteFile);
+        Util.benchmarkListener(findViewById(R.id.saveButton), findViewById(R.id.saveResult), this::saveFile);
+        Util.benchmarkListener(findViewById(R.id.readButton), findViewById(R.id.readResult), this::readFile);
+        Util.benchmarkListener(findViewById(R.id.deleteButton), findViewById(R.id.deleteResult), this::deleteFile);
     }
 
     public double saveFile() {

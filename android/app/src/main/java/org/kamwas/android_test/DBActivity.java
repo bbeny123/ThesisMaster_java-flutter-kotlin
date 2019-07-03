@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.kamwas.android_test.helper.User;
-import org.kamwas.android_test.helper.Utils;
+import org.kamwas.android_test.helper.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +34,11 @@ public class DBActivity extends AppCompatActivity {
 
         db = new DBPerformance(getApplicationContext());
 
-        Utils.benchmarkListener(findViewById(R.id.insertButton), findViewById(R.id.insertResult), this::insert);
-        Utils.benchmarkListener(findViewById(R.id.getOneButton), findViewById(R.id.getOneResult), this::get);
-        Utils.benchmarkListener(findViewById(R.id.getAllButton), findViewById(R.id.getAllResult), this::getAll);
-        Utils.benchmarkListener(findViewById(R.id.updateOneButton), findViewById(R.id.updateOneResult), this::update);
-        Utils.benchmarkListener(findViewById(R.id.deleteOneButton), findViewById(R.id.deleteOneResult), this::delete);
+        Util.benchmarkListener(findViewById(R.id.insertButton), findViewById(R.id.insertResult), this::insert);
+        Util.benchmarkListener(findViewById(R.id.getOneButton), findViewById(R.id.getOneResult), this::get);
+        Util.benchmarkListener(findViewById(R.id.getAllButton), findViewById(R.id.getAllResult), this::getAll);
+        Util.benchmarkListener(findViewById(R.id.updateOneButton), findViewById(R.id.updateOneResult), this::update);
+        Util.benchmarkListener(findViewById(R.id.deleteOneButton), findViewById(R.id.deleteOneResult), this::delete);
     }
 
     public double insert() {

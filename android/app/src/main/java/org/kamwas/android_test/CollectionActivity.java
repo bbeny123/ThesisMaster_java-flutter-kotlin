@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.kamwas.android_test.helper.TestObject;
-import org.kamwas.android_test.helper.Utils;
+import org.kamwas.android_test.helper.Util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,12 +31,12 @@ public class CollectionActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Utils.benchmarkListener(findViewById(R.id.addButton), findViewById(R.id.addResult), this::add10k);
-        Utils.benchmarkListener(findViewById(R.id.readAllButton), findViewById(R.id.readAllResult), this::readAll);
-        Utils.benchmarkListener(findViewById(R.id.readRandomButton), findViewById(R.id.readRandomResult), this::read10PercentRandom);
-        Utils.benchmarkListener(findViewById(R.id.removeRandomButton), findViewById(R.id.removeRandomResult), this::remove10PercentRandom);
-        Utils.benchmarkListener(findViewById(R.id.filterButton), findViewById(R.id.filterResult), this::filter);
-        Utils.benchmarkListener(findViewById(R.id.sortButton), findViewById(R.id.sortResult), this::sort);
+        Util.benchmarkListener(findViewById(R.id.addButton), findViewById(R.id.addResult), this::add10k);
+        Util.benchmarkListener(findViewById(R.id.readAllButton), findViewById(R.id.readAllResult), this::readAll);
+        Util.benchmarkListener(findViewById(R.id.readRandomButton), findViewById(R.id.readRandomResult), this::read10PercentRandom);
+        Util.benchmarkListener(findViewById(R.id.removeRandomButton), findViewById(R.id.removeRandomResult), this::remove10PercentRandom);
+        Util.benchmarkListener(findViewById(R.id.filterButton), findViewById(R.id.filterResult), this::filter);
+        Util.benchmarkListener(findViewById(R.id.sortButton), findViewById(R.id.sortResult), this::sort);
     }
 
     public double add10k() {

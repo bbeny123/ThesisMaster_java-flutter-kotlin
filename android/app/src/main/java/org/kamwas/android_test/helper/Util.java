@@ -7,7 +7,7 @@ import android.widget.TextView;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-public class Utils {
+public class Util {
 
     public static void benchmarkListener(Button button, TextView textView, Supplier<Double> benchmark) {
         button.setOnClickListener(b -> benchmark(textView, benchmark));

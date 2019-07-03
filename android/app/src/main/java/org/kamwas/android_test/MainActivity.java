@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findViewById(R.id.collectionButton).setOnClickListener(b -> goToActivity(CollectionActivity.class));
-        findViewById(R.id.restButton).setOnClickListener(b -> goToActivity(RestActivity.class));
+        findViewById(R.id.restButton).setOnClickListener(b -> goToActivity(RESTActivity.class));
         findViewById(R.id.dbButton).setOnClickListener(b -> goToActivity(DBActivity.class));
         findViewById(R.id.deserButton).setOnClickListener(b -> goToActivity(DeSerActivity.class));
         findViewById(R.id.fileButton).setOnClickListener(b -> goToActivity(FileActivity.class));

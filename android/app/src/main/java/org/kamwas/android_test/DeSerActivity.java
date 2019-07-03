@@ -7,7 +7,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import org.kamwas.android_test.helper.User;
-import org.kamwas.android_test.helper.Utils;
+import org.kamwas.android_test.helper.Util;
 
 import static java.lang.System.nanoTime;
 
@@ -26,8 +26,8 @@ public class DeSerActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Utils.benchmarkListener(findViewById(R.id.serializationButton), findViewById(R.id.serializationResult), this::serialize);
-        Utils.benchmarkListener(findViewById(R.id.deserializationButton), findViewById(R.id.deserializationResult), this::deserialize);
+        Util.benchmarkListener(findViewById(R.id.serializationButton), findViewById(R.id.serializationResult), this::serialize);
+        Util.benchmarkListener(findViewById(R.id.deserializationButton), findViewById(R.id.deserializationResult), this::deserialize);
     }
 
     public double serialize() {

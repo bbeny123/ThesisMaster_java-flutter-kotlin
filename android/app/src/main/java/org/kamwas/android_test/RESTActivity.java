@@ -7,7 +7,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import org.kamwas.android_test.helper.User;
-import org.kamwas.android_test.helper.Utils;
+import org.kamwas.android_test.helper.Util;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -18,7 +18,7 @@ import java.net.URL;
 import static java.lang.System.nanoTime;
 import static java.net.HttpURLConnection.HTTP_OK;
 
-public class RestActivity extends AppCompatActivity {
+public class RESTActivity extends AppCompatActivity {
 
     private static final double times = 500;
     private long timer = 0L;
@@ -33,8 +33,8 @@ public class RestActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Utils.benchmarkListener(findViewById(R.id.getButton), findViewById(R.id.getResult), this::get);
-        Utils.benchmarkListener(findViewById(R.id.postButton), findViewById(R.id.postResult), this::post);
+        Util.benchmarkListener(findViewById(R.id.getButton), findViewById(R.id.getResult), this::get);
+        Util.benchmarkListener(findViewById(R.id.postButton), findViewById(R.id.postResult), this::post);
     }
 
     public double get() {
@@ -47,7 +47,7 @@ public class RestActivity extends AppCompatActivity {
             result += nanoTime() - timer;
         }
 
-        Log.i("RestActivity", "GET success: " + dummy);
+        Log.i("RESTActivity", "GET success: " + dummy);
         return result / times;
     }
 
@@ -61,7 +61,7 @@ public class RestActivity extends AppCompatActivity {
             result += nanoTime() - timer;
         }
 
-        Log.i("RestActivity", "POST success");
+        Log.i("RESTActivity", "POST success");
         return result / times;
     }
 
@@ -93,7 +93,7 @@ public class RestActivity extends AppCompatActivity {
                 result = sb.toString();
             }
         } catch (Exception ex) {
-            Log.d("RestActivity", "getResponse error", ex);
+            Log.d("RESTActivity", "getResponse error", ex);
         }
         return result;
     }
@@ -108,7 +108,7 @@ public class RestActivity extends AppCompatActivity {
             out.writeBytes(json);
             con.getResponseCode();
         } catch (Exception ex) {
-            Log.d("RestActivity", "sendData error", ex);
+            Log.d("RESTActivity", "sendData error", ex);
         }
     }
 
@@ -118,7 +118,7 @@ public class RestActivity extends AppCompatActivity {
             con = (HttpURLConnection) new URL(url).openConnection();
             if (post) con.setRequestMethod("POST");
         } catch (Exception e) {
-            Log.d("RestActivity", "getConnection error", e);
+            Log.d("RESTActivity", "getConnection error", e);
         }
 
         if (con != null && post) {
