@@ -12,7 +12,7 @@ import org.kamwas.android_test.helper.Utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.RandomAccessFile;
+import java.security.SecureRandom;
 
 import static java.lang.System.nanoTime;
 
@@ -101,13 +101,11 @@ public class FileActivity extends AppCompatActivity {
     }
 
     public byte[] generateFile(int sizeMB) {
-        byte[] data = null;
-        try {
-            RandomAccessFile file = new RandomAccessFile(new File(getFilesDir(), FILE_NAME_2), "rw");
-            file.setLength(1024 * 1024 * sizeMB);
+        byte[] data = new byte[1024 * 1024 * sizeMB];
 
-            data = new byte[(int) file.length()];
-            file.readFully(data);
+        try (FileOutputStream out = new FileOutputStream(new File(getFilesDir(), FILE_NAME_2))) {
+            new SecureRandom().nextBytes(data);
+            out.write(data);
         } catch (Exception ex) {
             Log.d("FileActivity", "File Generation Error", ex);
         }
