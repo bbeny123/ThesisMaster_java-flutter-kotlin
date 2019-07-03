@@ -3,7 +3,6 @@ package org.kamwas.android_test;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,22 +11,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button restButton = findViewById(R.id.restButton);
-        Button deserButton = findViewById(R.id.deserButton);
-        Button fileButton = findViewById(R.id.fileButton);
-        Button dbButton = findViewById(R.id.dbButton);
-        Button collectionButton = findViewById(R.id.collectionButton);
-
-        collectionButton.setOnClickListener(b -> goToActivity(CollectionActivity.class));
-        restButton.setOnClickListener(b -> goToActivity(RestActivity.class));
-        dbButton.setOnClickListener(b -> goToActivity(DBActivity.class));
-        deserButton.setOnClickListener(b -> goToActivity(SerializationDeserializationActivity.class));
-        fileButton.setOnClickListener(b -> goToActivity(FileActivity.class));
+        findViewById(R.id.collectionButton).setOnClickListener(b -> goToActivity(CollectionActivity.class));
+        findViewById(R.id.restButton).setOnClickListener(b -> goToActivity(RestActivity.class));
+        findViewById(R.id.dbButton).setOnClickListener(b -> goToActivity(DBActivity.class));
+        findViewById(R.id.deserButton).setOnClickListener(b -> goToActivity(DeSerActivity.class));
+        findViewById(R.id.fileButton).setOnClickListener(b -> goToActivity(FileActivity.class));
     }
 
     private void goToActivity(Class<? extends AppCompatActivity> clz) {
-        Intent goToNextActivity = new Intent(getApplicationContext(), clz);
-        startActivity(goToNextActivity);
+        startActivity(new Intent(getApplicationContext(), clz));
     }
 
 }

@@ -1,8 +1,6 @@
 package org.kamwas.android_test.helper;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
+public class User {
 
     private Long id;
     private String login;
