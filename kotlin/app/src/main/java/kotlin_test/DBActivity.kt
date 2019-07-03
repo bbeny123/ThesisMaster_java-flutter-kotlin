@@ -14,13 +14,13 @@ class DBActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val DB = DBBenchmark(AndroidSqliteDriver(TestDB.Schema, applicationContext, "test.db"))
+        val db = DBBenchmark(AndroidSqliteDriver(TestDB.Schema, applicationContext, "test.db"))
 
-        addOneButton.setOnClickListener { Util.benchmark(addOneResult) { DB.insert() } }
-        getOneButton.setOnClickListener { Util.benchmark(getOneResult) { DB.get() } }
-        getAllButton.setOnClickListener { Util.benchmark(getAllResult) { DB.getAll() } }
-        updateOneButton.setOnClickListener { Util.benchmark(updateOneResult) { DB.update() } }
-        deleteOneButton.setOnClickListener { Util.benchmark(deleteOneResult) { DB.delete() } }
+        Util.benchmarkListener(insertButton, insertResult) { db.insert() }
+        Util.benchmarkListener(getOneButton, getOneResult) { db.get() }
+        Util.benchmarkListener(getAllButton, getAllResult) { db.getAll() }
+        Util.benchmarkListener(updateOneButton, updateOneResult) { db.update() }
+        Util.benchmarkListener(deleteOneButton, deleteOneResult) { db.delete() }
     }
 
 }

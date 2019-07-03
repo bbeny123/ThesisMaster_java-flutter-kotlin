@@ -18,9 +18,9 @@ class FileActivity : AppCompatActivity() {
 
         val benchmark = FileBenchmark(FileHelper(filesDir))
 
-        saveButton.setOnClickListener { Util.benchmark(saveResult) { benchmark.saveFile() } }
-        readButton.setOnClickListener { Util.benchmark(readResult) { benchmark.readFile() } }
-        deleteButton.setOnClickListener { Util.benchmark(deleteResult) { benchmark.deleteFile() } }
+        Util.benchmarkListener(saveButton, saveResult) { benchmark.saveFile() }
+        Util.benchmarkListener(readButton, readResult) { benchmark.readFile() }
+        Util.benchmarkListener(deleteButton, deleteResult) { benchmark.deleteFile() }
     }
 
 }

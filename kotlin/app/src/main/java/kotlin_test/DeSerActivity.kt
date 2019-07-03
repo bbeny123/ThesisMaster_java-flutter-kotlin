@@ -13,8 +13,8 @@ class DeSerActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        serializationButton.setOnClickListener { Util.benchmark(serializationResult) { DeSerBenchmark.serialization() } }
-        deserializationButton.setOnClickListener { Util.benchmark(deserializationResult) { DeSerBenchmark.deserialization() } }
+        Util.benchmarkListener(serializationButton, serializationResult) { DeSerBenchmark.serialization() }
+        Util.benchmarkListener(deserializationButton, deserializationResult) { DeSerBenchmark.deserialization() }
     }
 
 }

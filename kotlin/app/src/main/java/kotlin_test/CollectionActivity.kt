@@ -12,12 +12,12 @@ class CollectionActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        addButton.setOnClickListener { Util.benchmark(addResult) { CollectionBenchmark.add10k() } }
-        readAllButton.setOnClickListener { Util.benchmark(readAllResult) { CollectionBenchmark.readAll() } }
-        readRandomButton.setOnClickListener { Util.benchmark(readRandomResult) { CollectionBenchmark.read10PercentRandom() } }
-        removeRandomButton.setOnClickListener { Util.benchmark(removeRandomResult) { CollectionBenchmark.remove10PercentRandom() } }
-        filterButton.setOnClickListener { Util.benchmark(filterResult) { CollectionBenchmark.filter() } }
-        sortButton.setOnClickListener { Util.benchmark(sortResult) { CollectionBenchmark.sort() } }
+        Util.benchmarkListener(addButton, addResult) { CollectionBenchmark.add10k() }
+        Util.benchmarkListener(readAllButton, readAllResult) { CollectionBenchmark.readAll() }
+        Util.benchmarkListener(readRandomButton, readRandomResult) { CollectionBenchmark.read10PercentRandom() }
+        Util.benchmarkListener(removeRandomButton, removeRandomResult) { CollectionBenchmark.remove10PercentRandom() }
+        Util.benchmarkListener(filterButton, filterResult) { CollectionBenchmark.filter() }
+        Util.benchmarkListener(sortButton, sortResult) { CollectionBenchmark.sort() }
     }
 
 }
