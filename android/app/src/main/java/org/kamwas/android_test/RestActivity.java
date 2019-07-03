@@ -106,6 +106,7 @@ public class RestActivity extends AppCompatActivity {
              DataOutputStream out = new DataOutputStream(con.getOutputStream())) {
 
             out.writeBytes(json);
+            con.getResponseCode();
         } catch (Exception ex) {
             Log.d("RestActivity", "sendData error", ex);
         }

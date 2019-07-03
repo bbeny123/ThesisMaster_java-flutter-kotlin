@@ -17,6 +17,16 @@
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <Button
+        android:id="@+id/getButton"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="220dp"
+        android:text="GET"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <Button
         android:id="@+id/postButton"
         android:layout_width="130dp"
         android:layout_height="60dp"
@@ -28,16 +38,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/getButton"
         app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/getButton"
-        android:layout_width="130dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="220dp"
-        android:text="GET"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/getResult"

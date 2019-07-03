@@ -34,7 +34,7 @@ public class DBActivity extends AppCompatActivity {
 
         db = new DBPerformance(getApplicationContext());
 
-        Utils.benchmarkListener(findViewById(R.id.addOneButton), findViewById(R.id.addOneResult), this::insert);
+        Utils.benchmarkListener(findViewById(R.id.insertButton), findViewById(R.id.insertResult), this::insert);
         Utils.benchmarkListener(findViewById(R.id.getOneButton), findViewById(R.id.getOneResult), this::get);
         Utils.benchmarkListener(findViewById(R.id.getAllButton), findViewById(R.id.getAllResult), this::getAll);
         Utils.benchmarkListener(findViewById(R.id.updateOneButton), findViewById(R.id.updateOneResult), this::update);

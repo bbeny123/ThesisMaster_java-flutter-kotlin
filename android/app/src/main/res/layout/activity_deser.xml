@@ -17,6 +17,16 @@
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <Button
+        android:id="@+id/serializationButton"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="220dp"
+        android:text="Serialization"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <Button
         android:id="@+id/deserializationButton"
         android:layout_width="150dp"
         android:layout_height="60dp"
@@ -28,16 +38,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/serializationButton"
         app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/serializationButton"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="220dp"
-        android:text="Serialization"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/serializationResult"
