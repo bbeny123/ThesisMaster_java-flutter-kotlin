@@ -85,7 +85,7 @@ public class FileActivity extends AppCompatActivity {
         return result / times;
     }
 
-     public void saveFile(String name, byte[] data) {
+    public void saveFile(String name, byte[] data) {
         File file = new File(getFilesDir(), name);
 
         try (FileOutputStream out = new FileOutputStream(file)) {

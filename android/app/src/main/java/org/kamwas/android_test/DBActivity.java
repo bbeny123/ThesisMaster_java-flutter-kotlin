@@ -146,7 +146,7 @@ public class DBActivity extends AppCompatActivity {
         }
 
         private User get(long id) {
-            String[] args = { id + "" };
+            String[] args = {id + ""};
             List<User> result = mapCursor(getReadableDatabase().query(DB.TABLE_NAME, null, DB.COLUMN_ID + " = ?", args, null, null, null));
             return !result.isEmpty() ? result.get(0) : null;
         }
@@ -158,12 +158,12 @@ public class DBActivity extends AppCompatActivity {
         private void update(long id, int i) {
             ContentValues values = new ContentValues();
             values.put(DB.COLUMN_NAME, id + i);
-            String[] args = { id + "" };
+            String[] args = {id + ""};
             getWritableDatabase().update(DB.TABLE_NAME, values, DB.COLUMN_ID + " = ?", args);
         }
 
         private void delete(long id) {
-            String[] args = { id + "" };
+            String[] args = {id + ""};
             getWritableDatabase().delete(DB.TABLE_NAME, DB.COLUMN_ID + " = ?", args);
         }
 

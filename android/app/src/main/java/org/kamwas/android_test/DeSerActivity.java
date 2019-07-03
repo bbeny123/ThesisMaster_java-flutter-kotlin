@@ -10,6 +10,7 @@ import org.kamwas.android_test.helper.User;
 import org.kamwas.android_test.helper.Utils;
 
 import static java.lang.System.nanoTime;
+
 public class DeSerActivity extends AppCompatActivity {
 
     private static final double times = 10000;
