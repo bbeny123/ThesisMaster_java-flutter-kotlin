@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
               _menu(context, 'SERIALIZATION\nDESERIALIZATION', DeSer()),
               Padding(padding: EdgeInsets.all(8.0)),
               _menu(context, 'FILE', File())
-            ],
+            ]
           )
-      ),
+      )
     );
   }
 }
@@ -62,7 +62,7 @@ class Collection extends StatelessWidget {
                 Padding(padding: EdgeInsets.all(8.0)),
                 _row('SORT', () => benchmark.sort())
               ]
-          ),
+          )
         )
     );
   }
@@ -114,7 +114,7 @@ class DB extends StatelessWidget {
                 Padding(padding: EdgeInsets.all(8.0)),
                 _row('DELETE ONE', () => benchmark.delete())
               ]
-          ),
+          )
         )
     );
   }
@@ -162,7 +162,7 @@ class File extends StatelessWidget {
                 Padding(padding: EdgeInsets.all(8.0)),
                 _row('DELETE', () => benchmark.deleteFile())
               ]
-          ),
+          )
         )
     );
   }
