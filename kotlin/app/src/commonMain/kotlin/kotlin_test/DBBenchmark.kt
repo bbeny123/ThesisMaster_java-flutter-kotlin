@@ -75,7 +75,6 @@ class DBBenchmark(driver: SqlDriver) {
     }
 
     fun delete(): Double {
-        val times = 1000
         var result = 0L
 
         prepareData(tableSize + times)
@@ -96,7 +95,7 @@ class DBBenchmark(driver: SqlDriver) {
 
     private fun findAll(): List<User> = userQueries.selectAll().executeAsList().map { it.toUser() }
 
-    private fun update(id: Long, i: Int) = userQueries.updateId((id + i).toString(), id)
+    private fun update(id: Long, i: Int) = userQueries.updateName((id + i).toString(), id)
 
     private fun delete(id: Long) = userQueries.delete(id)
 

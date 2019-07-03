@@ -21,5 +21,5 @@ INSERT INTO USERS(ID, LOGIN, EMAIL, NAME, AGE) VALUES (:id, :login, :email, :nam
 delete:
 DELETE FROM USERS WHERE ID = :id;
 
-updateId:
+updateName:
 UPDATE USERS SET NAME = :name WHERE ID = :id;
