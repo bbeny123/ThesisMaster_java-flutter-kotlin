@@ -82,7 +82,7 @@ class CollectionBenchmark {
 
   int _add(int times) {
     List<TestObject> list = List();
-    for(int i = 0; i < times; i++) {
+    for (int i = 0; i < times; i++) {
       list.add(TestObject(i, 'item $i'));
     }
     return list.length;
@@ -128,5 +128,4 @@ class CollectionBenchmark {
   List<int> _generateRandomIndexes(int size, int maxIndex, bool reduce) {
     return List.generate(size, (i) => Random().nextInt(maxIndex - (reduce ? i : 0)));
   }
-
 }

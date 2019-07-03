@@ -7,7 +7,6 @@ import 'package:http/http.dart';
 import 'helper/User.dart';
 
 class RESTBenchmark {
-
   static const int _times = 500;
   int _timer = 0;
 
@@ -61,5 +60,4 @@ class RESTBenchmark {
       print('POST ERROR');
     }
   }
-
 }

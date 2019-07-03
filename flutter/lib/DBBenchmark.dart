@@ -151,9 +151,7 @@ class DBBenchmark {
       DB.COLUMN_NAME: user.name,
       DB.COLUMN_AGE: user.age
     };
-
   }
-
 }
 
 class DB {

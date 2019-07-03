@@ -93,6 +93,7 @@ class REST extends StatelessWidget {
 
 class DB extends StatelessWidget {
   final benchmark = DBBenchmark();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

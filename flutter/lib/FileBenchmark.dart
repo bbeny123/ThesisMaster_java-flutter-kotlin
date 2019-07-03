@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class FileBenchmark {
-
   static const int _times = 50;
   int _timer = 0;
-  
+
   static const String FILE_NAME = "test_file";
   static const String FILE_NAME2 = "test_file2";
   static const String FILE_GENERATED = "test_file_generated";
@@ -69,5 +68,4 @@ class FileBenchmark {
   void _deleteFile(String name) {
     return File('$_path/$name').deleteSync();
   }
-
 }
