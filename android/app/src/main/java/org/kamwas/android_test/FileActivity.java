@@ -29,9 +29,9 @@ public class FileActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Utils.benchmarkListener(findViewById(R.id.saveButton), findViewById(R.id.readButton), this::saveFile);
-        Utils.benchmarkListener(findViewById(R.id.deleteButton), findViewById(R.id.saveResult), this::readFile);
-        Utils.benchmarkListener(findViewById(R.id.readResult), findViewById(R.id.deleteResult), this::deleteFile);
+        Utils.benchmarkListener(findViewById(R.id.saveButton), findViewById(R.id.saveResult), this::saveFile);
+        Utils.benchmarkListener(findViewById(R.id.readButton), findViewById(R.id.readResult), this::readFile);
+        Utils.benchmarkListener(findViewById(R.id.deleteButton), findViewById(R.id.deleteResult), this::deleteFile);
     }
 
     public double saveFile() {

@@ -15,7 +15,7 @@ public class Utils {
 
     public static void benchmark(TextView textView, Supplier<Double> benchmark) {
         textView.setText("Benchmarking");
-        AsyncTask.execute(() -> textView.setText(String.format(Locale.UK, "%.3f ms", benchmark.get())));
+        AsyncTask.execute(() -> textView.setText(String.format(Locale.UK, "%.3f ms", benchmark.get() / 1000000)));
     }
 
 }

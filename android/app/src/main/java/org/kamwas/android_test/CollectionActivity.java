@@ -61,7 +61,7 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     public double read10PercentRandom() {
-        List<TestObject> list = generateList(listSize);
+        List<TestObject> list = generateList((int) times * 10);
         List<Integer> toRead = generateRandomIndexes((int) times, (int) times * 10, false);
         int dummy;
 
@@ -74,7 +74,7 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     public double remove10PercentRandom() {
-        List<TestObject> list = generateList(listSize);
+        List<TestObject> list = generateList((int) times * 10);
         List<Integer> toRemove = generateRandomIndexes((int) times, (int) times * 10, true);
 
         timer = nanoTime();
@@ -98,7 +98,7 @@ public class CollectionActivity extends AppCompatActivity {
         }
 
         Log.i("CollectionActivity", "Collection Filter Benchmark finished");
-        return result / times;
+        return result / timesShort;
     }
 
     public double sort() {
@@ -113,7 +113,7 @@ public class CollectionActivity extends AppCompatActivity {
         }
 
         Log.i("CollectionActivity", "Collection Sort Benchmark finished");
-        return result / times;
+        return result / timesShort;
     }
 
     public int add(int times) {

@@ -186,7 +186,7 @@ public class DBActivity extends AppCompatActivity {
             List<User> users = new ArrayList<>();
             if (cursor.moveToFirst()) {
                 do {
-                    users.add(new User(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(5)));
+                    users.add(new User(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4)));
                 } while (cursor.moveToNext());
             }
             cursor.close();

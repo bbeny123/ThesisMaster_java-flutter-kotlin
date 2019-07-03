@@ -1,21 +1,16 @@
 package org.kamwas.android_test;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
 import org.kamwas.android_test.helper.User;
 import org.kamwas.android_test.helper.Utils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
